@@ -1,6 +1,7 @@
 using UnityEngine;
 
 // The music controller is responsible for the background music and its volume
+[RequireComponent(typeof(AudioSource))]
 public class MusicController : MonoBehaviour
 {
     // The source of the background music
