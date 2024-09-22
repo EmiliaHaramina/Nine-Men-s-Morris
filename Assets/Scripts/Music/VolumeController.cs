@@ -6,8 +6,9 @@ public class VolumeController : MonoBehaviour
     [SerializeField] private Scrollbar scrollbar;
     [SerializeField] private MusicController musicController;
 
-    void Start()
+    public void Initialize()
     {
+        scrollbar.value = PlayerPrefs.GetFloat(PlayerPrefsKeys.playerPrefsVolume);
         scrollbar.onValueChanged.AddListener((float value) => ScrollbarCallback(value));
     }
 
