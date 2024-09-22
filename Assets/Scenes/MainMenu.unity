@@ -480,7 +480,7 @@ PrefabInstance:
       objectReference: {fileID: 1688024029}
     - target: {fileID: 8310035435780076386, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_Name
-      value: ExitText
+      value: ButtonText
       objectReference: {fileID: 0}
     - target: {fileID: 8310035435780076388, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_text
@@ -1169,7 +1169,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1281191820028761796, guid: d2bc52b7b75cdba4e8b87722e23cb2eb, type: 3}
       propertyPath: m_Name
-      value: SoundEffectsController (1)
+      value: SoundEffectsController
       objectReference: {fileID: 0}
     - target: {fileID: 8556483888930236031, guid: d2bc52b7b75cdba4e8b87722e23cb2eb, type: 3}
       propertyPath: m_RootOrder
@@ -1812,7 +1812,7 @@ PrefabInstance:
       objectReference: {fileID: 1688024029}
     - target: {fileID: 8310035435780076386, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_Name
-      value: PlayText
+      value: ButtonText
       objectReference: {fileID: 0}
     - target: {fileID: 8310035435780076388, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_text
