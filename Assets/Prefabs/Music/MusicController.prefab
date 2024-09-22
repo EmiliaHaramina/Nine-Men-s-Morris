@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1763383268864596132}
-  volume: 100
+  volume: 1
   musicPlaying: 1
 --- !u!82 &1763383268864596132
 AudioSource:
