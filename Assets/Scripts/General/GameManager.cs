@@ -11,4 +11,9 @@ public class GameManager : MonoBehaviour
         musicController.Initialize();
         volumeController.Initialize();
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
