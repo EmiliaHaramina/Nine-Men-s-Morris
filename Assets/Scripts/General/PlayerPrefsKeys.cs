@@ -9,7 +9,9 @@ static public class PlayerPrefsKeys
     // Key for the background music volume
     public static string musicVolume = "musicVolume";
     // Key for the sound effects
-    //public static string playerPre
+    public static string soundEffectsPlaying = "soundEffectsPlaying";
+    // Key for the sound effects volume
+    public static string soundEffectsVolume = "soundEffectsVolume";
 
     // Initializes player prefs
     static public void Initialize()
@@ -20,5 +22,11 @@ static public class PlayerPrefsKeys
         // Initializes background music volume
         if (!PlayerPrefs.HasKey(musicVolume))
             PlayerPrefs.SetFloat(musicVolume, 1f);
+        // Initializes sound effects
+        if (!PlayerPrefs.HasKey(soundEffectsPlaying))
+            PlayerPrefs.SetInt(soundEffectsPlaying, 1);
+        // Initializes sound effects volume
+        if (!PlayerPrefs.HasKey(soundEffectsVolume))
+            PlayerPrefs.SetFloat(soundEffectsVolume, 1f);
     }
 }
