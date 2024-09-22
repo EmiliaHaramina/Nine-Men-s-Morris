@@ -30,14 +30,14 @@ public class MusicController : MonoBehaviour
         soundSource.volume = volume;
 
         // Changes the volume preference in the player prefs
-        PlayerPrefs.SetFloat(PlayerPrefsKeys.playerPrefsMusicVolume, volume);
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.musicVolume, volume);
         PlayerPrefs.Save();
     }
 
     // Sets the volume value of the background music according to the saved player prefs
     void SetVolumeFromPlayerPrefs()
     {
-        volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.playerPrefsMusicVolume);
+        volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.musicVolume);
         soundSource.volume = volume;
     }
 
@@ -53,7 +53,7 @@ public class MusicController : MonoBehaviour
     // Sets the background music according to the saved player prefs
     void SetSoundFromPlayerPrefs()
     {
-        bool soundPlaying = PlayerPrefs.GetInt(PlayerPrefsKeys.playerPrefsMusicPlaying) == 1 ? true : false;
+        bool soundPlaying = PlayerPrefs.GetInt(PlayerPrefsKeys.musicPlaying) == 1 ? true : false;
         if (soundPlaying)
             PlaySound();
         else
@@ -67,7 +67,7 @@ public class MusicController : MonoBehaviour
         soundSource.Play();
 
         // Saves the required value of the background music in the player prefs
-        PlayerPrefs.SetInt(PlayerPrefsKeys.playerPrefsMusicPlaying, 1);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.musicPlaying, 1);
         PlayerPrefs.Save();
     }
 
@@ -78,7 +78,7 @@ public class MusicController : MonoBehaviour
         soundSource.Pause();
 
         // Saves the required value of the background music in the player prefs
-        PlayerPrefs.SetInt(PlayerPrefsKeys.playerPrefsMusicPlaying, 0);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.musicPlaying, 0);
         PlayerPrefs.Save();
     }
 }
