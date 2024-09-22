@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 4608970002867309117}
   - component: {fileID: 4608970002867309116}
   m_Layer: 5
-  m_Name: VolumeController
+  m_Name: MusicVolumeController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
