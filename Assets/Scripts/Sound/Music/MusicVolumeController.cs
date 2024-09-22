@@ -8,11 +8,13 @@ public class MusicVolumeController : MonoBehaviour
     // The scrollbar that is used for changing the volume
     [SerializeField] private Scrollbar scrollbar;
     // The music controller responsible for the background music
-    [SerializeField] private MusicController musicController;
+    private MusicController musicController;
 
-    // Initializes the background music volume scrollbar
+    // Finds the music controller and initializes the background music volume scrollbar
     public void Initialize()
     {
+        musicController = FindObjectOfType<MusicController>();
+
         scrollbar.value = PlayerPrefs.GetFloat(PlayerPrefsKeys.musicVolume);
         scrollbar.onValueChanged.AddListener((float value) => ScrollbarCallback(value));
     }

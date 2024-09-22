@@ -8,11 +8,13 @@ public class SoundEffectsVolumeController : MonoBehaviour
     // The scrollbar that is used for changing the volume
     [SerializeField] private Scrollbar scrollbar;
     // The sound effects controller responsible for the sound effects
-    [SerializeField] private SoundEffectsController soundEffectsController;
+    private SoundEffectsController soundEffectsController;
 
-    // Initializes the sound effects volume scrollbar
+    // Finds the sound effects controller and initializes the sound effects volume scrollbar
     public void Initialize()
     {
+        soundEffectsController = FindObjectOfType<SoundEffectsController>();
+
         scrollbar.value = PlayerPrefs.GetFloat(PlayerPrefsKeys.soundEffectsVolume);
         scrollbar.onValueChanged.AddListener((float value) => ScrollbarCallback(value));
     }

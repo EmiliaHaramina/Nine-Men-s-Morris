@@ -4,18 +4,24 @@ using UnityEngine;
 public class SettingsManager : MonoBehaviour
 {
     // Background music controller
-    [SerializeField] private MusicController musicController;
+    private MusicController musicController;
     // Background music volume controller
-    [SerializeField] private MusicVolumeController musicVolumeController;
+    private MusicVolumeController musicVolumeController;
     // Sound effects controller
-    [SerializeField] private SoundEffectsController soundEffectsController;
+    private SoundEffectsController soundEffectsController;
     // Sound effects volume controller
-    [SerializeField] private SoundEffectsVolumeController soundEffectsVolumeController;
+    private SoundEffectsVolumeController soundEffectsVolumeController;
 
     // Initializes the player prefs and the sound and volume for the background
-    // music
+    // music and sound effects
     void Start()
     {
+        // Finding all required controllers
+        musicController = FindObjectOfType<MusicController>();
+        musicVolumeController = FindObjectOfType<MusicVolumeController>();
+        soundEffectsController = FindObjectOfType<SoundEffectsController>();
+        soundEffectsVolumeController = FindObjectOfType<SoundEffectsVolumeController>();
+
         // Initializes player prefs
         PlayerPrefsKeys.Initialize();
 
