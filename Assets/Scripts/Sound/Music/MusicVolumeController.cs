@@ -13,7 +13,7 @@ public class MusicVolumeController : MonoBehaviour
     // Initializes the background music volume scrollbar
     public void Initialize()
     {
-        scrollbar.value = PlayerPrefs.GetFloat(PlayerPrefsKeys.playerPrefsMusicVolume);
+        scrollbar.value = PlayerPrefs.GetFloat(PlayerPrefsKeys.musicVolume);
         scrollbar.onValueChanged.AddListener((float value) => ScrollbarCallback(value));
     }
 
