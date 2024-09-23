@@ -1846,9 +1846,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1965226674}
     m_Modifications:
     - target: {fileID: 3719494374316673840, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
+      propertyPath: soundSource
+      value: 
+      objectReference: {fileID: 107679706}
+    - target: {fileID: 3719494374316673840, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: soundEffectsController
       value: 
       objectReference: {fileID: 1688024029}
+    - target: {fileID: 4337024437373995810, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
+      propertyPath: soundSource
+      value: 
+      objectReference: {fileID: 1001737943}
     - target: {fileID: 4337024437373995810, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: soundEffectsController
       value: 
@@ -1927,7 +1935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8310035434946525580, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 165.00002
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8310035434946525580, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1943,11 +1951,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8310035434946525581, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_Name
-      value: SettingsButton (1)
+      value: BackToMainMenuButton
       objectReference: {fileID: 0}
     - target: {fileID: 8310035434946525581, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8310035434946525583, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1967,7 +1975,17 @@ PrefabInstance:
       objectReference: {fileID: 1688024029}
     - target: {fileID: 8310035435780076388, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
       propertyPath: m_text
-      value: SETTINGS
+      value: 'BACK TO
+
+        MAIN MENU'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310035435780076388, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
+      propertyPath: m_fontSize
+      value: 30.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310035435780076388, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30.21
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99a2294138e8d354095f28bcd76ad006, type: 3}
