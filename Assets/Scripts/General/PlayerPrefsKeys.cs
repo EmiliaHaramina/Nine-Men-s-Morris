@@ -27,16 +27,16 @@ static public class PlayerPrefsKeys
     {
         // Initializes background music
         if (!PlayerPrefs.HasKey(musicPlaying))
-            PlayerPrefs.SetInt(musicPlaying, 1);
+            PlayerPrefs.SetInt(musicPlaying, DefaultValues.musicPlaying);
         // Initializes background music volume
         if (!PlayerPrefs.HasKey(musicVolume))
-            PlayerPrefs.SetFloat(musicVolume, 1f);
+            PlayerPrefs.SetFloat(musicVolume, DefaultValues.musicVolume);
         // Initializes sound effects
         if (!PlayerPrefs.HasKey(soundEffectsPlaying))
-            PlayerPrefs.SetInt(soundEffectsPlaying, 1);
+            PlayerPrefs.SetInt(soundEffectsPlaying, DefaultValues.soundEffectsPlaying);
         // Initializes sound effects volume
         if (!PlayerPrefs.HasKey(soundEffectsVolume))
-            PlayerPrefs.SetFloat(soundEffectsVolume, 1f);
+            PlayerPrefs.SetFloat(soundEffectsVolume, DefaultValues.soundEffectsVolume);
 
         // Initializes the name of player 1
         if (!PlayerPrefs.HasKey(player1Name))
