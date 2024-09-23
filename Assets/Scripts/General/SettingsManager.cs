@@ -11,6 +11,8 @@ public class SettingsManager : MonoBehaviour
     private SoundEffectsController soundEffectsController;
     // Sound effects volume controller
     private SoundEffectsVolumeController soundEffectsVolumeController;
+    // Player controller
+    private PlayerController playerController;
 
     // Initializes the player prefs and the sound and volume for the background
     // music and sound effects
@@ -21,17 +23,21 @@ public class SettingsManager : MonoBehaviour
         musicVolumeController = FindObjectOfType<MusicVolumeController>();
         soundEffectsController = FindObjectOfType<SoundEffectsController>();
         soundEffectsVolumeController = FindObjectOfType<SoundEffectsVolumeController>();
+        playerController = FindObjectOfType<PlayerController>();
 
         // Initializes player prefs
         PlayerPrefsKeys.Initialize();
 
         // Initializes background music
-        musicController.Initialize();
+        musicController?.Initialize();
         // Initializes background music volume
-        musicVolumeController.Initialize();
+        musicVolumeController?.Initialize();
         // Initializes sound effects
-        soundEffectsController.Initialize();
+        soundEffectsController?.Initialize();
         // Initializes sound effects volume
-        soundEffectsVolumeController.Initialize();
+        soundEffectsVolumeController?.Initialize();
+
+        // Initializes the players
+        playerController?.Initialize();
     }
 }

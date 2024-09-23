@@ -40,16 +40,16 @@ static public class PlayerPrefsKeys
 
         // Initializes the name of player 1
         if (!PlayerPrefs.HasKey(player1Name))
-            PlayerPrefs.SetString(player1Name, "Player 1");
+            PlayerPrefs.SetString(player1Name, DefaultValues.player1Name);
         // Initializes the color of player 1
         if (!PlayerPrefs.HasKey(player1Color))
-            PlayerPrefs.SetString(player1Color, "#000000");
+            PlayerPrefs.SetString(player1Color, DefaultValues.player1Color);
         // Initializes the name of player 2
         if (!PlayerPrefs.HasKey(player2Name))
-            PlayerPrefs.SetString(player2Name, "Player 2");
+            PlayerPrefs.SetString(player2Name, DefaultValues.player2Name);
         // Initializes the color of player 2
         if (!PlayerPrefs.HasKey(player2Color))
-            PlayerPrefs.SetString(player2Color, "#FFFFFF");
+            PlayerPrefs.SetString(player2Color, DefaultValues.player2Color);
 
         // Saves the player prefs
         PlayerPrefs.Save();

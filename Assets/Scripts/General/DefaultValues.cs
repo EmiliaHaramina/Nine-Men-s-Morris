@@ -7,4 +7,10 @@ static public class DefaultValues
     static public float musicVolume = 1f;
     static public int soundEffectsPlaying = 1;
     static public float soundEffectsVolume = 1f;
+
+    // Default values for player properties
+    static public string player1Name = "Player 1";
+    static public string player1Color = "#000000";
+    static public string player2Name = "Player 2";
+    static public string player2Color = "#FFFFFF";
 }
