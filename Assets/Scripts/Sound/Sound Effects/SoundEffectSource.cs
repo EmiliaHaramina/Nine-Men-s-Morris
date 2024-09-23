@@ -1,7 +1,6 @@
 using UnityEngine;
 
 // The sound effect source allows an object to play a sound effect
-[RequireComponent(typeof(AudioSource))]
 public class SoundEffectSource : MonoBehaviour
 {
     // The source of the sound effect
