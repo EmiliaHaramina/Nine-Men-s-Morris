@@ -29,15 +29,15 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefsKeys.Initialize();
 
         // Initializes background music
-        musicController?.Initialize();
+        musicController.Initialize();
         // Initializes background music volume
-        musicVolumeController?.Initialize();
+        musicVolumeController.Initialize();
         // Initializes sound effects
-        soundEffectsController?.Initialize();
+        soundEffectsController.Initialize();
         // Initializes sound effects volume
-        soundEffectsVolumeController?.Initialize();
+        soundEffectsVolumeController.Initialize();
 
         // Initializes the players
-        playerController?.Initialize();
+        playerController.Initialize();
     }
 }
