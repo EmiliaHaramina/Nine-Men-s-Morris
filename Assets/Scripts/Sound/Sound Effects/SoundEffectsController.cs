@@ -7,10 +7,14 @@ public class SoundEffectsController : MonoBehaviour
     [SerializeField] private float volume;
     // A bool tracking whether sound effects can be played
     [SerializeField] private bool soundPlaying;
+    // A menu controller to change the speaker image
+    [SerializeField] private MenuController menuController;
 
     // Initializes the sound effects and their volume depending on the player prefs
     public void Initialize()
     {
+        menuController = FindObjectOfType<MenuController>();
+
         SetSoundFromPlayerPrefs();
         SetVolumeFromPlayerPrefs();
     }
@@ -48,8 +52,10 @@ public class SoundEffectsController : MonoBehaviour
     {
         this.soundPlaying = soundPlaying;
 
+        menuController.SetSoundEffectsPlaying(soundPlaying);
+
         // Changes the sound effects preference in the player prefs
-        PlayerPrefs.SetFloat(PlayerPrefsKeys.soundEffectsPlaying, soundPlaying ? 1 : 0);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.soundEffectsPlaying, soundPlaying ? 1 : 0);
         PlayerPrefs.Save();
     }
 
@@ -57,6 +63,8 @@ public class SoundEffectsController : MonoBehaviour
     void SetSoundFromPlayerPrefs()
     {
         soundPlaying = PlayerPrefs.GetInt(PlayerPrefsKeys.soundEffectsPlaying) == 1 ? true : false;
+
+        menuController.SetSoundEffectsPlaying(soundPlaying);
     }
 
     // Plays the given sound effect

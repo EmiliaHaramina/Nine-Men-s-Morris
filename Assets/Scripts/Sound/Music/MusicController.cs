@@ -10,10 +10,14 @@ public class MusicController : MonoBehaviour
     [SerializeField] private float volume;
     // A bool tracking whether the background music is currently being played
     [SerializeField] private bool soundPlaying;
+    // A menu controller to change the speaker image
+    [SerializeField] private MenuController menuController;
 
     // Initializes the background music and its volume depending on the player prefs
     public void Initialize()
     {
+        menuController = FindObjectOfType<MenuController>();
+
         SetSoundFromPlayerPrefs();
         SetVolumeFromPlayerPrefs();
     }
@@ -67,6 +71,8 @@ public class MusicController : MonoBehaviour
         soundPlaying = true;
         soundSource.Play();
 
+        menuController.SetMusicPlaying(soundPlaying);
+
         // Saves the required value of the background music in the player prefs
         PlayerPrefs.SetInt(PlayerPrefsKeys.musicPlaying, 1);
         PlayerPrefs.Save();
@@ -77,6 +83,8 @@ public class MusicController : MonoBehaviour
     {
         soundPlaying = false;
         soundSource.Pause();
+
+        menuController.SetMusicPlaying(soundPlaying);
 
         // Saves the required value of the background music in the player prefs
         PlayerPrefs.SetInt(PlayerPrefsKeys.musicPlaying, 0);
