@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,8 +19,15 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Image soundEffectsSpeakerImage;
     [SerializeField] private bool musicPlaying;
     [SerializeField] private bool soundEffectsPlaying;
-    [SerializeField] private Scrollbar musicVolumeScrollbar;
-    [SerializeField] private Scrollbar soundEffectsVolumeScrollbar;
+
+    // Parameters for changing player properties
+    [SerializeField] private TMP_InputField player1InputField;
+    [SerializeField] private Image player1NameAlert;
+    [SerializeField] private TMP_InputField player2InputField;
+    [SerializeField] private Image player2NameAlert;
+    private PlayerController playerController;
+    [SerializeField] private Sprite tickSprite;
+    [SerializeField] private Sprite crossSprite;
 
     // When the menu is shown at first, the main menu is set to be active,
     // while the settings menu should not be shown
@@ -27,11 +35,23 @@ public class MenuController : MonoBehaviour
     {
         mainMenu.SetActive(true);
         settingsMenu.SetActive(false);
+
+        // Menu player properties initialization
+        playerController = FindObjectOfType<PlayerController>();
+        player1InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player1Name);
+        player2InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player2Name);
+        player1InputField.onValueChanged.AddListener((string value) => ChangePlayer1Name(value));
+        player2InputField.onValueChanged.AddListener((string value) => ChangePlayer2Name(value));
+
+        // When the game starts, both players have different names
+        player1NameAlert.sprite = tickSprite;
+        player2NameAlert.sprite = tickSprite;
     }
 
     // Toggles between the main menu and the settings menu
     public void ToggleMenu()
     {
+        // TODO: Put the right name and tick
         mainMenuVisible = !mainMenuVisible;
         mainMenu.SetActive(mainMenuVisible);
         settingsMenu.SetActive(!mainMenuVisible);
@@ -88,5 +108,25 @@ public class MenuController : MonoBehaviour
             soundEffectsSpeakerImage.sprite = speakerOnSprite;
         else
             soundEffectsSpeakerImage.sprite = speakerOffSprite;
+    }
+
+    // Changes player 1's name
+    private void ChangePlayer1Name(string name)
+    {
+        if (name.Equals(playerController.GetPlayerName(DefaultValues.player1Id)) ||
+            playerController.ChangePlayerName(DefaultValues.player1Id, name))
+            player1NameAlert.sprite = tickSprite;
+        else
+            player1NameAlert.sprite = crossSprite;
+    }
+
+    // Changes player 2's name
+    private void ChangePlayer2Name(string name)
+    {
+        if (name.Equals(playerController.GetPlayerName(DefaultValues.player2Id)) ||
+            playerController.ChangePlayerName(DefaultValues.player2Id, name))
+            player1NameAlert.sprite = tickSprite;
+        else
+            player2NameAlert.sprite = crossSprite;
     }
 }
