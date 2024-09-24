@@ -9,8 +9,10 @@ static public class DefaultValues
     static public float soundEffectsVolume = 1f;
 
     // Default values for player properties
+    static public long player1Id = 1;
     static public string player1Name = "Player 1";
     static public string player1Color = "#000000";
+    static public long player2Id = 2;
     static public string player2Name = "Player 2";
     static public string player2Color = "#FFFFFF";
 }

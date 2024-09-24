@@ -1,11 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // The player controller is tresponsible for the properties of players
 public class PlayerController : MonoBehaviour
 {
     // The player properties class contains all properties of a player
-    public class PlayerProperties
+    private class PlayerProperties
     {
+        // The unique id of the player
+        public long id;
         // The player's name
         public string playerName;
         // The player's color
@@ -17,22 +20,24 @@ public class PlayerController : MonoBehaviour
 
         // A player's properties are defined by the player prefs keys
         // of their name and color
-        public PlayerProperties(string nameKey, string colorKey)
+        public PlayerProperties(long id, string nameKey, string colorKey)
         {
+            this.id = id;
             this.nameKey = nameKey;
             this.colorKey = colorKey;
         }
     }
 
     // Two players that can play the game
-    private PlayerProperties player1;
-    private PlayerProperties player2;
+    private List<PlayerProperties> players = new List<PlayerProperties>();
 
     // Initializes the player's names and colors according to the player prefs
     public void Initialize()
     {
-        player1 = new PlayerProperties(PlayerPrefsKeys.player1Name, PlayerPrefsKeys.player1Color);
-        player2 = new PlayerProperties(PlayerPrefsKeys.player2Name, PlayerPrefsKeys.player2Color);
+        PlayerProperties player1 = new PlayerProperties(DefaultValues.player1Id, PlayerPrefsKeys.player1Name, PlayerPrefsKeys.player1Color);
+        PlayerProperties player2 = new PlayerProperties(DefaultValues.player2Id, PlayerPrefsKeys.player2Name, PlayerPrefsKeys.player2Color);
+        players.Add(player1);
+        players.Add(player2);
 
         SetPlayerNameFromPlayerPrefs(player1);
         SetPlayerColorFromPlayerPrefs(player1);
@@ -42,24 +47,42 @@ public class PlayerController : MonoBehaviour
         // If the players have the same name and/or color (for example, by changing them in
         // the local player prefs file), both of their names and/or colors are changed to their
         // default values
-        if (player1.playerName.Equals(player2.playerName))
+        for (int i = 0; i < players.Count; i++)
         {
-            SetPlayerName(player1, DefaultValues.player1Name);
-            SetPlayerName(player2, DefaultValues.player2Name);
-        }
-        if (player1.color.Equals(player2.color))
-        {
-            ColorUtility.TryParseHtmlString(DefaultValues.player1Color, out Color player1Color);
-            SetPlayerColor(player1, player1Color);
+            for (int j = 0; j < players.Count; j++)
+            {
+                if (i == j)
+                    continue;
 
-            ColorUtility.TryParseHtmlString(DefaultValues.player1Color, out Color player2Color);
-            SetPlayerColor(player2, player2Color);
+                PlayerProperties iPlayer = players[i];
+                PlayerProperties jPlayer = players[j];
+
+                if (iPlayer.playerName.Equals(jPlayer.playerName))
+                {
+                    SetPlayerName(iPlayer, DefaultValues.player1Name);
+                    SetPlayerName(jPlayer, DefaultValues.player2Name);
+                }
+
+                if (iPlayer.color.Equals(jPlayer.color))
+                {
+                    ColorUtility.TryParseHtmlString(DefaultValues.player1Color, out Color player1Color);
+                    SetPlayerColor(player1, player1Color);
+
+                    ColorUtility.TryParseHtmlString(DefaultValues.player1Color, out Color player2Color);
+                    SetPlayerColor(player2, player2Color);
+                }
+            }
         }
     }
 
-    // Getters for players 1 and 2
-    public PlayerProperties GetPlayer1 () { return player1; }
-    public PlayerProperties GetPlayer2 () { return player2; }
+    // Return the name of the player with the given id
+    public string GetPlayerName(long id)
+    {
+        for (int i = 0; i < players.Count; i++)
+            if (players[i].id == id)
+                return players[i].playerName;
+        return null;
+    }
 
     // Sets the player's name from the player prefs
     void SetPlayerNameFromPlayerPrefs(PlayerProperties player)
@@ -87,6 +110,7 @@ public class PlayerController : MonoBehaviour
     {
         player.color = color;
 
+        // TODO: Needs to be checked
         Debug.Log(ColorUtility.ToHtmlStringRGB(color));
         PlayerPrefs.SetString(player.colorKey, ColorUtility.ToHtmlStringRGB(color));
         PlayerPrefs.Save();
@@ -96,23 +120,30 @@ public class PlayerController : MonoBehaviour
     // player
     bool IsNameAvailable(string name)
     {
-        if (player1.playerName.Equals(name))
-            return false;
-        if (player2.playerName.Equals(name))
-            return false;
+        for (int i = 0; i < players.Count; i++)
+            if (players[i].playerName.Equals(name))
+                return false;
 
         return true;
     }
 
-    // Changes the player's name if it is available and returns true
-    // if it was changed
-    public bool ChangePlayerName(PlayerProperties player, string name)
+    // Changes the player's name if it is available and not empty
+    // and returns true if it was changed
+    public bool ChangePlayerName(long id, string name)
     {
-        if (IsNameAvailable(name))
+        if (IsNameAvailable(name) && !name.Equals(""))
         {
-            SetPlayerName(player, name);
-            return true;
+            for (int i = 0; i < players.Count; i++)
+            {
+                PlayerProperties player = players[i];
+                if (player.id == id)
+                {
+                    SetPlayerName(player, name);
+                    return true;
+                }
+            }
         }
+
         return false;
     }
 
@@ -120,23 +151,30 @@ public class PlayerController : MonoBehaviour
     // player
     bool IsColorAvailable(Color color)
     {
-        if (player1.color.Equals(color))
-            return false;
-        if (player2.color.Equals(color))
-            return false;
+        for (int i = 0; i < players.Count; i++)
+            if (players[i].color.Equals(color))
+                return false;
 
         return true;
     }
 
     // Changes the player's color if it is available and returns true
     // if it was changed
-    public bool ChangePlayerColor(PlayerProperties player, Color color)
+    public bool ChangePlayerColor(long id, Color color)
     {
-        if (IsColorAvailable(color))
+        if (IsColorAvailable(color) && color != null)
         {
-            SetPlayerColor(player, color);
-            return true;
+            for (int i = 0; i < players.Count; i++)
+            {
+                PlayerProperties player = players[i];
+                if (player.id == id)
+                {
+                    SetPlayerColor(player, color);
+                    return true;
+                }
+            }
         }
+
         return false;
     }
 }
