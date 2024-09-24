@@ -51,10 +51,16 @@ public class MenuController : MonoBehaviour
     // Toggles between the main menu and the settings menu
     public void ToggleMenu()
     {
-        // TODO: Put the right name and tick
         mainMenuVisible = !mainMenuVisible;
         mainMenu.SetActive(mainMenuVisible);
         settingsMenu.SetActive(!mainMenuVisible);
+
+        // When the settings menu is shown again, the last available name of
+        // both players will be shown
+        player1InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player1Name);
+        player2InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player2Name);
+        player1NameAlert.sprite = tickSprite;
+        player2NameAlert.sprite = tickSprite;
     }
 
     // Sets whether the background music is currently playing
