@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // The player properties class contains all properties of a player
-    private class PlayerProperties
+    public class PlayerProperties
     {
         // The player's name
         public string playerName;
@@ -57,6 +57,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Getters for players 1 and 2
+    public PlayerProperties GetPlayer1 () { return player1; }
+    public PlayerProperties GetPlayer2 () { return player2; }
+
     // Sets the player's name from the player prefs
     void SetPlayerNameFromPlayerPrefs(PlayerProperties player)
     {
@@ -86,5 +90,53 @@ public class PlayerController : MonoBehaviour
         Debug.Log(ColorUtility.ToHtmlStringRGB(color));
         PlayerPrefs.SetString(player.colorKey, ColorUtility.ToHtmlStringRGB(color));
         PlayerPrefs.Save();
+    }
+
+    // Returns true if the given name is not currently used by any
+    // player
+    bool IsNameAvailable(string name)
+    {
+        if (player1.playerName.Equals(name))
+            return false;
+        if (player2.playerName.Equals(name))
+            return false;
+
+        return true;
+    }
+
+    // Changes the player's name if it is available and returns true
+    // if it was changed
+    public bool ChangePlayerName(PlayerProperties player, string name)
+    {
+        if (IsNameAvailable(name))
+        {
+            SetPlayerName(player, name);
+            return true;
+        }
+        return false;
+    }
+
+    // Returns true if the given color is not currently used by any
+    // player
+    bool IsColorAvailable(Color color)
+    {
+        if (player1.color.Equals(color))
+            return false;
+        if (player2.color.Equals(color))
+            return false;
+
+        return true;
+    }
+
+    // Changes the player's color if it is available and returns true
+    // if it was changed
+    public bool ChangePlayerColor(PlayerProperties player, Color color)
+    {
+        if (IsColorAvailable(color))
+        {
+            SetPlayerColor(player, color);
+            return true;
+        }
+        return false;
     }
 }
