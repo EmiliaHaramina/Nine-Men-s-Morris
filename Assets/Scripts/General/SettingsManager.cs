@@ -7,14 +7,14 @@ public class SettingsManager : MonoBehaviour
     private PlayerController playerController;
     // Menu controller
     private MenuController menuController;
-    // Background music controller
-    private MusicController musicController;
     // Background music volume controller
     private MusicVolumeController musicVolumeController;
-    // Sound effects controller
-    private SoundEffectsController soundEffectsController;
+    // Background music controller
+    private MusicController musicController;
     // Sound effects volume controller
     private SoundEffectsVolumeController soundEffectsVolumeController;
+    // Sound effects controller
+    private SoundEffectsController soundEffectsController;
 
     // Initializes the player prefs and the sound and volume for the background
     // music and sound effects
@@ -23,10 +23,10 @@ public class SettingsManager : MonoBehaviour
         // Finding all required controllers
         playerController = FindObjectOfType<PlayerController>();
         menuController = FindObjectOfType<MenuController>();
-        musicController = FindObjectOfType<MusicController>();
         musicVolumeController = FindObjectOfType<MusicVolumeController>();
-        soundEffectsController = FindObjectOfType<SoundEffectsController>();
+        musicController = FindObjectOfType<MusicController>();
         soundEffectsVolumeController = FindObjectOfType<SoundEffectsVolumeController>();
+        soundEffectsController = FindObjectOfType<SoundEffectsController>();
 
         // Initializes player prefs
         PlayerPrefsKeys.Initialize();
@@ -37,13 +37,13 @@ public class SettingsManager : MonoBehaviour
         // Initializes the menu
         menuController.Initialize();
 
-        // Initializes background music
-        musicController.Initialize();
         // Initializes background music volume
         musicVolumeController.Initialize();
-        // Initializes sound effects
-        soundEffectsController.Initialize();
+        // Initializes background music
+        musicController.Initialize();
         // Initializes sound effects volume
         soundEffectsVolumeController.Initialize();
+        // Initializes sound effects
+        soundEffectsController.Initialize();
     }
 }

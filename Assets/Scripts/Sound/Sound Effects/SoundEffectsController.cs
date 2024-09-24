@@ -8,7 +8,10 @@ public class SoundEffectsController : MonoBehaviour
     // A bool tracking whether sound effects can be played
     [SerializeField] private bool soundPlaying;
     // A menu controller to change the speaker image
-    [SerializeField] private MenuController menuController;
+    private MenuController menuController;
+    // The sound effects volume controller to disable the scrollbar when sound effects
+    // are muted
+    [SerializeField] private SoundEffectsVolumeController soundEffectsVolumeController;
 
     // Initializes the sound effects and their volume depending on the player prefs
     public void Initialize()
@@ -52,7 +55,11 @@ public class SoundEffectsController : MonoBehaviour
     {
         this.soundPlaying = soundPlaying;
 
+        // Changes the speaker icon
         menuController.SetSoundEffectsPlaying(soundPlaying);
+
+        // Changes the volume scrollbar for the sound effects
+        ChangeVolumeScrollbar();
 
         // Changes the sound effects preference in the player prefs
         PlayerPrefs.SetInt(PlayerPrefsKeys.soundEffectsPlaying, soundPlaying ? 1 : 0);
@@ -64,7 +71,11 @@ public class SoundEffectsController : MonoBehaviour
     {
         soundPlaying = PlayerPrefs.GetInt(PlayerPrefsKeys.soundEffectsPlaying) == 1 ? true : false;
 
+        // Changes the speaker icon
         menuController.SetSoundEffectsPlaying(soundPlaying);
+
+        // Changes the volume scrollbar for the sound effects
+        ChangeVolumeScrollbar();
     }
 
     // Plays the given sound effect
@@ -82,5 +93,15 @@ public class SoundEffectsController : MonoBehaviour
     {
         if (soundSource.isPlaying)
             soundSource.Stop();
+    }
+
+    // Changes the scrollbar according to whether the sound effects
+    // should be played or not
+    private void ChangeVolumeScrollbar()
+    {
+        if (soundPlaying)
+            soundEffectsVolumeController.EnableVolume();
+        else
+            soundEffectsVolumeController.DisableVolume();
     }
 }

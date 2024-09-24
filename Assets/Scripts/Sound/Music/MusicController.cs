@@ -11,7 +11,10 @@ public class MusicController : MonoBehaviour
     // A bool tracking whether the background music is currently being played
     [SerializeField] private bool soundPlaying;
     // A menu controller to change the speaker image
-    [SerializeField] private MenuController menuController;
+    private MenuController menuController;
+    // The music volume controller to disable the scrollbar when background
+    // music is muted
+    [SerializeField] private MusicVolumeController musicVolumeController;
 
     // Initializes the background music and its volume depending on the player prefs
     public void Initialize()
@@ -71,7 +74,12 @@ public class MusicController : MonoBehaviour
         soundPlaying = true;
         soundSource.Play();
 
+        // Changes the speaker icon
         menuController.SetMusicPlaying(soundPlaying);
+
+        // Enables the volume scrollbar for the background music and sets
+        // its volume to the current volume
+        musicVolumeController.EnableVolume();
 
         // Saves the required value of the background music in the player prefs
         PlayerPrefs.SetInt(PlayerPrefsKeys.musicPlaying, 1);
@@ -84,7 +92,12 @@ public class MusicController : MonoBehaviour
         soundPlaying = false;
         soundSource.Pause();
 
+        // Changes the speaker icon
         menuController.SetMusicPlaying(soundPlaying);
+
+        // Disables the volume scrollbar for the background music and sets
+        // its volume to 0
+        musicVolumeController.DisableVolume();
 
         // Saves the required value of the background music in the player prefs
         PlayerPrefs.SetInt(PlayerPrefsKeys.musicPlaying, 0);

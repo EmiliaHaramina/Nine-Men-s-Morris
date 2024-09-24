@@ -1303,6 +1303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundEffectsController
       objectReference: {fileID: 0}
+    - target: {fileID: 4551367108059809521, guid: d2bc52b7b75cdba4e8b87722e23cb2eb, type: 3}
+      propertyPath: soundEffectsVolumeController
+      value: 
+      objectReference: {fileID: 1676160815}
     - target: {fileID: 8556483888930236031, guid: d2bc52b7b75cdba4e8b87722e23cb2eb, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1919,6 +1923,14 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 28b3a729727c583439ae03d6d99eca79, type: 3}
+    - target: {fileID: 7694564097300282284, guid: 5898c29437eba404ca95c2895df1463c, type: 3}
+      propertyPath: soundPlaying
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7694564097300282284, guid: 5898c29437eba404ca95c2895df1463c, type: 3}
+      propertyPath: musicVolumeController
+      value: 
+      objectReference: {fileID: 2061532610}
     - target: {fileID: 8556483888930236031, guid: 5898c29437eba404ca95c2895df1463c, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2266,6 +2278,10 @@ PrefabInstance:
       propertyPath: soundSource
       value: 
       objectReference: {fileID: 1001737943}
+    - target: {fileID: 9188286779835876424, guid: 962cfab269fa4c34ba23cf0892b6b8e3, type: 3}
+      propertyPath: soundSource
+      value: 
+      objectReference: {fileID: 107679706}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 962cfab269fa4c34ba23cf0892b6b8e3, type: 3}
 --- !u!1001 &7083855720785315731
@@ -2275,6 +2291,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1965226674}
     m_Modifications:
+    - target: {fileID: 318156641189152787, guid: 669d7c1122edb814e9992c480821286c, type: 3}
+      propertyPath: soundSource
+      value: 
+      objectReference: {fileID: 107679706}
     - target: {fileID: 7083855720849836258, guid: 669d7c1122edb814e9992c480821286c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2371,6 +2391,10 @@ PrefabInstance:
       propertyPath: soundSource
       value: 
       objectReference: {fileID: 1001737943}
+    - target: {fileID: 7083855721143049885, guid: 669d7c1122edb814e9992c480821286c, type: 3}
+      propertyPath: m_Name
+      value: SpeakerClickSoundSource
+      objectReference: {fileID: 0}
     - target: {fileID: 7083855721591598101, guid: 669d7c1122edb814e9992c480821286c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
