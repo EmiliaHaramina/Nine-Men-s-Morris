@@ -135,4 +135,18 @@ public class MenuController : MonoBehaviour
         else
             player2NameAlert.sprite = crossSprite;
     }
+
+    // Changes player 1's color to the defined color
+    public void ChangePlayer1Color(Color color)
+    {
+        if (playerController.GetPlayerColor(DefaultValues.player2Id) != color)
+            playerController.ChangePlayerColor(DefaultValues.player1Id, color);
+    }
+
+    // Changes player 2's color to the defined color
+    public void ChangePlayer2Color(Color color)
+    {
+        if (playerController.GetPlayerColor(DefaultValues.player1Id) != color)
+            playerController.ChangePlayerColor(DefaultValues.player2Id, color);
+    }
 }

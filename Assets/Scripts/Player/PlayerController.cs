@@ -84,6 +84,14 @@ public class PlayerController : MonoBehaviour
         return null;
     }
 
+    public Color GetPlayerColor(long id)
+    {
+        for (int i = 0; i < players.Count; i++)
+            if (players[i].id == id)
+                return players[i].color;
+        return Color.black;
+    }
+
     // Sets the player's name from the player prefs
     void SetPlayerNameFromPlayerPrefs(PlayerProperties player)
     {
@@ -110,9 +118,7 @@ public class PlayerController : MonoBehaviour
     {
         player.color = color;
 
-        // TODO: Needs to be checked
-        Debug.Log(ColorUtility.ToHtmlStringRGB(color));
-        PlayerPrefs.SetString(player.colorKey, ColorUtility.ToHtmlStringRGB(color));
+        PlayerPrefs.SetString(player.colorKey, "#" + ColorUtility.ToHtmlStringRGB(color));
         PlayerPrefs.Save();
     }
 
