@@ -226,4 +226,10 @@ public class MenuManager : MonoBehaviour
         }
         return null;
     }
+
+    // Exits the game
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
