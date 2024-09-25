@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour
         public long id;
         // The player's name
         public string playerName;
-        // The player's color
-        public Color color;
+        // The player's color hex code
+        public string colorHexValue;
         // The player prefs key of the player's name
         public string nameKey;
         // The player prefs key of the player's color
@@ -63,13 +63,10 @@ public class PlayerController : MonoBehaviour
                     SetPlayerName(jPlayer, DefaultValues.player2Name);
                 }
 
-                if (iPlayer.color.Equals(jPlayer.color))
+                if (iPlayer.colorHexValue.Equals(jPlayer.colorHexValue))
                 {
-                    ColorUtility.TryParseHtmlString(DefaultValues.player1Color, out Color player1Color);
-                    SetPlayerColor(player1, player1Color);
-
-                    ColorUtility.TryParseHtmlString(DefaultValues.player1Color, out Color player2Color);
-                    SetPlayerColor(player2, player2Color);
+                    SetPlayerColor(player1, DefaultValues.player1ColorHexValue);
+                    SetPlayerColor(player2, DefaultValues.player2ColorHexValue);
                 }
             }
         }
@@ -84,12 +81,14 @@ public class PlayerController : MonoBehaviour
         return null;
     }
 
-    public Color GetPlayerColor(long id)
+    // Returns the color hex code of the player with the given id
+    public string GetPlayerColorHexValue(long id)
     {
         for (int i = 0; i < players.Count; i++)
             if (players[i].id == id)
-                return players[i].color;
-        return Color.black;
+                return players[i].colorHexValue;
+        // If the player with this id doesn't exit, return black
+        return "#FFFFFF";
     }
 
     // Sets the player's name from the player prefs
@@ -101,7 +100,7 @@ public class PlayerController : MonoBehaviour
     // Sets the player's color from the player prefs
     void SetPlayerColorFromPlayerPrefs(PlayerProperties player)
     {
-        ColorUtility.TryParseHtmlString(PlayerPrefs.GetString(player.colorKey), out player.color);
+        player.colorHexValue = PlayerPrefs.GetString(player.colorKey);
     }
 
     // Sets the player's name as defined by the given string and saves it to player prefs
@@ -114,11 +113,11 @@ public class PlayerController : MonoBehaviour
     }
 
     // Sets the player's color as defined by the given color and saves it to player prefs
-    void SetPlayerColor(PlayerProperties player, Color color)
+    void SetPlayerColor(PlayerProperties player, string colorHexValue)
     {
-        player.color = color;
+        player.colorHexValue = colorHexValue;
 
-        PlayerPrefs.SetString(player.colorKey, "#" + ColorUtility.ToHtmlStringRGB(color));
+        PlayerPrefs.SetString(player.colorKey, colorHexValue);
         PlayerPrefs.Save();
     }
 
@@ -155,10 +154,10 @@ public class PlayerController : MonoBehaviour
 
     // Returns true if the given color is not currently used by any
     // player
-    bool IsColorAvailable(Color color)
+    bool IsColorAvailable(string colorHexValue)
     {
         for (int i = 0; i < players.Count; i++)
-            if (players[i].color.Equals(color))
+            if (players[i].colorHexValue.Equals(colorHexValue))
                 return false;
 
         return true;
@@ -166,16 +165,16 @@ public class PlayerController : MonoBehaviour
 
     // Changes the player's color if it is available and returns true
     // if it was changed
-    public bool ChangePlayerColor(long id, Color color)
+    public bool ChangePlayerColor(long id, string colorHexValue)
     {
-        if (IsColorAvailable(color) && color != null)
+        if (IsColorAvailable(colorHexValue) && colorHexValue != "")
         {
             for (int i = 0; i < players.Count; i++)
             {
                 PlayerProperties player = players[i];
                 if (player.id == id)
                 {
-                    SetPlayerColor(player, color);
+                    SetPlayerColor(player, colorHexValue);
                     return true;
                 }
             }

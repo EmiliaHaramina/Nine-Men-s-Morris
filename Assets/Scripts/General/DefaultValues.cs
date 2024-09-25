@@ -1,3 +1,5 @@
+using UnityEngine;
+
 // The default value class keeps track of default values throughout
 // the game
 static public class DefaultValues
@@ -11,8 +13,13 @@ static public class DefaultValues
     // Default values for player properties
     static public long player1Id = 1;
     static public string player1Name = "Player 1";
-    static public string player1Color = "#000000";
+    static public string player1ColorHexValue = "#000000";
     static public long player2Id = 2;
     static public string player2Name = "Player 2";
-    static public string player2Color = "#FFFFFF";
+    static public string player2ColorHexValue = "#FFFFFF";
+
+    // Default values for color choices
+    static public Color colorAvailable = new(41, 41, 41);
+    static public Color colorPicked = new(160, 210, 148);
+    static public Color colorUnavailable = new(255, 182, 182);
 }

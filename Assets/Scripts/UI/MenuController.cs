@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +29,9 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Sprite tickSprite;
     [SerializeField] private Sprite crossSprite;
 
+    [SerializeField] private List<ColorChoice> player1ColorChoices;
+    [SerializeField] private List<ColorChoice> player2ColorChoices;
+
     // When the menu is shown at first, the main menu is set to be active,
     // while the settings menu should not be shown
     public void Initialize()
@@ -46,6 +49,35 @@ public class MenuController : MonoBehaviour
         // When the game starts, both players have different names
         player1NameAlert.sprite = tickSprite;
         player2NameAlert.sprite = tickSprite;
+
+        // Setting the player ids of color choices
+        long player1Id = DefaultValues.player1Id;
+        long player2Id = DefaultValues.player2Id;
+
+        foreach (ColorChoice colorChoice in player1ColorChoices)
+            colorChoice.SetPlayerId(player1Id);
+        foreach (ColorChoice colorChoice in player2ColorChoices)
+            colorChoice.SetPlayerId(player2Id);
+
+        // Setting the color choices as picked and unavailable
+        string player1ColorHexValue = playerController.GetPlayerColorHexValue(player1Id);
+        string player2ColorHexValue = playerController.GetPlayerColorHexValue(player2Id);
+        for (int i = 0; i < player1ColorChoices.Count; i++)
+        {
+            ColorChoice colorChoice = player1ColorChoices[i];
+            if (colorChoice.GetColorHexValue() == player1ColorHexValue)
+                colorChoice.MakePicked();
+            else if (colorChoice.GetColorHexValue() == player2ColorHexValue)
+                colorChoice.MakeUnavailable();
+        }
+        for (int i = 0; i < player2ColorChoices.Count; i++)
+        {
+            ColorChoice colorChoice = player2ColorChoices[i];
+            if (colorChoice.GetColorHexValue() == player2ColorHexValue)
+                colorChoice.MakePicked();
+            else if (colorChoice.GetColorHexValue() == player1ColorHexValue)
+                colorChoice.MakeUnavailable();
+        }
     }
 
     // Toggles between the main menu and the settings menu
@@ -136,17 +168,9 @@ public class MenuController : MonoBehaviour
             player2NameAlert.sprite = crossSprite;
     }
 
-    // Changes player 1's color to the defined color
-    public void ChangePlayer1Color(Color color)
+    // Changes a player's color to the defined color
+    public void ChangePlayerColor(long playerId, string colorHexValue)
     {
-        if (playerController.GetPlayerColor(DefaultValues.player2Id) != color)
-            playerController.ChangePlayerColor(DefaultValues.player1Id, color);
-    }
-
-    // Changes player 2's color to the defined color
-    public void ChangePlayer2Color(Color color)
-    {
-        if (playerController.GetPlayerColor(DefaultValues.player1Id) != color)
-            playerController.ChangePlayerColor(DefaultValues.player2Id, color);
+        if (playerController.ChangePlayerColor(playerId, colorHexValue)) ;
     }
 }
