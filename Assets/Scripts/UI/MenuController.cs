@@ -168,9 +168,62 @@ public class MenuController : MonoBehaviour
             player2NameAlert.sprite = crossSprite;
     }
 
-    // Changes a player's color to the defined color
+    // Changes a player's color to the defined color and changes the color
+    // of color choice panels according to the picked color
     public void ChangePlayerColor(long playerId, string colorHexValue)
     {
-        if (playerController.ChangePlayerColor(playerId, colorHexValue)) ;
+        if (playerController.ChangePlayerColor(playerId, colorHexValue))
+        {
+            // Switch all color choices
+            SwitchColorChoices(playerId, colorHexValue, player1ColorChoices);
+            SwitchColorChoices(playerId, colorHexValue, player2ColorChoices);
+        }
+    }
+
+    // Switches all color choices from the given list according to the color that was just changed
+    // The color that was changed is defined by its colorHexValue, while the playerId is the id
+    // of the player that changed their color
+    private void SwitchColorChoices(long playerId, string colorHexValue, List<ColorChoice> colorchoices)
+    {
+        ColorChoice colorChoicePicked = FindColorChoice(playerId, colorHexValue);
+        foreach (ColorChoice colorChoice in colorchoices)
+        {
+            // If this is the color choice that was just picked, set it to picked
+            if (colorChoice == colorChoicePicked && colorChoice.GetPlayerId() == playerId)
+                colorChoice.MakePicked();
+            // If this is the color that the player had picked before this one, set it
+            // to available
+            else if (colorChoice.IsPicked() && colorChoice.GetPlayerId() == playerId)
+                colorChoice.MakeAvailable();
+            // If this color choice has the same color as the one that was just picked, but
+            // is for the other player, set it to unavailable
+            else if (colorChoice.GetColorHexValue() == colorHexValue)
+                colorChoice.MakeUnavailable();
+            // If this is the color that was unavailable for the other player before,
+            // set it to available
+            else if (colorChoice.IsUnavailable() && colorChoice.GetPlayerId() != playerId)
+                colorChoice.MakeAvailable();
+        }
+    }
+
+    // Returns the color choice corresponding to the player with the given id that
+    // contains the given color hex value
+    private ColorChoice FindColorChoice(long playerId, string colorHexValue)
+    {
+        if (playerId == DefaultValues.player1Id)
+        {
+            foreach (ColorChoice colorChoice1 in player1ColorChoices)
+                if (colorChoice1.GetPlayerId() == playerId &&
+                    colorChoice1.GetColorHexValue().Equals(colorHexValue))
+                    return colorChoice1;
+        }
+        else if (playerId == DefaultValues.player2Id)
+        {
+            foreach (ColorChoice colorChoice2 in player2ColorChoices)
+                if (colorChoice2.GetPlayerId() == playerId &&
+                    colorChoice2.GetColorHexValue().Equals(colorHexValue))
+                    return colorChoice2;
+        }
+        return null;
     }
 }

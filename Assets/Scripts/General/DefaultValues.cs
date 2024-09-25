@@ -19,7 +19,8 @@ static public class DefaultValues
     static public string player2ColorHexValue = "#FFFFFF";
 
     // Default values for color choices
-    static public Color colorAvailable = new(41, 41, 41);
-    static public Color colorPicked = new(160, 210, 148);
-    static public Color colorUnavailable = new(255, 182, 182);
+    static public string colorAvailableHexValue = "#414141";
+    static public string colorPickedHexValue = "#6DFF64";
+    static public string colorUnavailableHexValue = "#FF0000";
+    static public float panelColorTransparency = 100f;
 }
