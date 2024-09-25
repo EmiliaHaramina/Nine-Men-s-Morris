@@ -3,8 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// The menu controller is responsible for the menu UI
-public class MenuController : MonoBehaviour
+// The menu manager is responsible for the menu UI
+public class MenuManager : MonoBehaviour
 {
     // Parameters required for switching between the main menu and
     // the settings menu
@@ -34,7 +34,7 @@ public class MenuController : MonoBehaviour
 
     // When the menu is shown at first, the main menu is set to be active,
     // while the settings menu should not be shown
-    public void Initialize()
+    void Start()
     {
         mainMenu.SetActive(true);
         settingsMenu.SetActive(false);

@@ -5,8 +5,6 @@ public class SettingsManager : MonoBehaviour
 {
     // Player controller
     private PlayerController playerController;
-    // Menu controller
-    private MenuController menuController;
     // Background music volume controller
     private MusicVolumeController musicVolumeController;
     // Background music controller
@@ -22,7 +20,6 @@ public class SettingsManager : MonoBehaviour
     {
         // Finding all required controllers
         playerController = FindObjectOfType<PlayerController>();
-        menuController = FindObjectOfType<MenuController>();
         musicVolumeController = FindObjectOfType<MusicVolumeController>();
         musicController = FindObjectOfType<MusicController>();
         soundEffectsVolumeController = FindObjectOfType<SoundEffectsVolumeController>();
@@ -33,9 +30,6 @@ public class SettingsManager : MonoBehaviour
 
         // Initializes the players
         playerController.Initialize();
-
-        // Initializes the menu
-        menuController.Initialize();
 
         // Initializes background music volume
         musicVolumeController.Initialize();
