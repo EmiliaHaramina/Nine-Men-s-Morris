@@ -1,20 +1,20 @@
 using UnityEngine;
 
 // A point is an intersection on the board where players can place their men
-public class Point
+public class Point : MonoBehaviour
 {
     // The id of the player occupying this point
     private long playerId;
     // The position of the point on the board, the first coordinate is the index
     // of the circle, the second is the index of the column, and the third is
     // the index of the row
-    [SerializeField] private Vector3Int position;
+    private Vector3Int position;
 
     // A point is defined by its position and the playerId is set to the default one
     // that belong to no player
-    public Point(ref Vector3Int position)
+    public void Initialize(int circleIndex, int rowIndex, int columnIndex)
     {
-        this.position = position;
+        position = new Vector3Int(circleIndex, rowIndex, columnIndex);
         playerId = DefaultValues.freePointPlayerId;
     }
 

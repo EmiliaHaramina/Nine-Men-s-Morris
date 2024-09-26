@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gamePaused = false;
-        board = new();
+        board = FindObjectOfType<Board>();
         board.Initialize(3);
     }
 
