@@ -23,4 +23,8 @@ static public class DefaultValues
     static public string colorPickedHexValue = "#6DFF64";
     static public string colorUnavailableHexValue = "#FF0000";
     static public float panelColorTransparency = 100f;
+
+    // Default value for player id of point that is not
+    // taken
+    static public long freePointPlayerId = -1;
 }
