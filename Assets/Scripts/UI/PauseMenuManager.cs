@@ -53,14 +53,4 @@ public class PauseMenuManager : MenuManager
     {
         return paused;
     }
-
-    public override void SetMusicPlaying(bool musicPlaying)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void SetSoundEffectsPlaying(bool soundEffectsPlaying)
-    {
-        throw new System.NotImplementedException();
-    }
 }

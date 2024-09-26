@@ -12,45 +12,53 @@ public class SoundManager : MonoBehaviour
     private bool musicPlaying;
     private bool soundEffectsPlaying;
 
+    // Sets the background music to play
     public void SetMusicPlaying(bool musicPlaying)
     {
         this.musicPlaying = musicPlaying;
         ChangeMusicSpeakerImage();
     }
 
+    // Toggles the background music
     public void ToggleMusicPlaying()
     {
         musicPlaying = !musicPlaying;
         ChangeMusicSpeakerImage();
     }
 
+    // Sets the sound effects to play
     public void SetSoundEffectsPlaying(bool soundEffectsPlaying)
     {
         this.soundEffectsPlaying = soundEffectsPlaying;
         ChangeSoundEffectsSpeakerImage();
     }
 
+    // Toggles the sound effects
     public void ToggleSoundEffectsPlaying()
     {
         soundEffectsPlaying = !soundEffectsPlaying;
         ChangeSoundEffectsSpeakerImage();
     }
 
+    // Sets the background music speaker sprite to be on
     public void SetMusicSpeakerOnSprite()
     {
         musicSpeakerImage.sprite = speakerOnSprite;
     }
 
+    // Sets the background music speaker sprite to be off
     public void SetMusicSpeakerOffSprite()
     {
         musicSpeakerImage.sprite = speakerOffSprite;
     }
 
+    // Sets the sound effects speaker sprite to be on
     public void SetSoundEffectsSpeakerOnSprite()
     {
         soundEffectsSpeakerImage.sprite = speakerOnSprite;
     }
 
+    // Sets the sound effects speaker sprite to be off
     public void SetSoundEffectsSpeakerOffSprite()
     {
         soundEffectsSpeakerImage.sprite = speakerOffSprite;

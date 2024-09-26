@@ -12,7 +12,6 @@ public class MainMenuManager : MenuManager
     [SerializeField] private GameObject settingsMenu;
     private bool mainMenuVisible = true;
 
-    private SoundManager soundManager;
 
     // Parameters for changing player properties
     [SerializeField] private TMP_InputField player1InputField;
@@ -89,32 +88,6 @@ public class MainMenuManager : MenuManager
         player2InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player2Name);
         player1NameAlert.sprite = tickSprite;
         player2NameAlert.sprite = tickSprite;
-    }
-
-    // Sets whether the background music is currently playing
-    // according to the given bool
-    public override void SetMusicPlaying(bool musicPlaying)
-    {
-        soundManager.SetMusicPlaying(musicPlaying);
-    }
-
-    // Toggles the speaker icon for the background music
-    public void ToggleMusicSpeaker()
-    {
-        soundManager.ToggleMusicPlaying();
-    }
-
-    // Sets whether the sound effects are currently playing
-    // according to the given bool
-    public override void SetSoundEffectsPlaying(bool soundEffectsPlaying)
-    {
-        soundManager.SetSoundEffectsPlaying(soundEffectsPlaying);
-    }
-
-    // Toggles the speaker icon for the sound effects
-    public void ToggleSoundEffectsSpeaker()
-    {
-        soundManager.ToggleSoundEffectsPlaying();
     }
 
     // Changes player 1's name
