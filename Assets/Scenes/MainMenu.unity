@@ -3127,6 +3127,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1323333197}
     - target: {fileID: 8900421874292956204, guid: 7f751f750229da84bab9801c0f0ce5b9, type: 3}
+      propertyPath: menuType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8900421874292956204, guid: 7f751f750229da84bab9801c0f0ce5b9, type: 3}
       propertyPath: tickSprite
       value: 
       objectReference: {fileID: 21300000, guid: 8650223d345a4864b9a2f73a35439b72, type: 3}

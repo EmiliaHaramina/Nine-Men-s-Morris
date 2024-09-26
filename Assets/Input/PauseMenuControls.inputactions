@@ -1,0 +1,34 @@
+{
+    "name": "PauseMenuControls",
+    "maps": [
+        {
+            "name": "PauseMenu",
+            "id": "a58856db-67d4-4ea0-993d-9acc2b0099f3",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "0c8b8584-3140-4f25-891d-c997250e8c67",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9125543d-9fce-439e-95c9-cfe79e8d16e8",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

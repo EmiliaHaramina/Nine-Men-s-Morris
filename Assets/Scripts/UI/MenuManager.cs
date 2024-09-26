@@ -1,11 +1,19 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 // The menu manager is responsible for the menu UI
 public class MenuManager : MonoBehaviour
 {
+    // An enum that defines which type of menu is present in the scene
+    private enum MenuType
+    {
+        MainMenu, PauseMenu
+    }
+    [SerializeField] private MenuType menuType;
+
     // Parameters required for switching between the main menu and
     // the settings menu
     [SerializeField] private GameObject mainMenu;
@@ -32,52 +40,103 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private List<ColorChoice> player1ColorChoices;
     [SerializeField] private List<ColorChoice> player2ColorChoices;
 
+    // The pause menu
+    [SerializeField] private GameObject pauseMenu;
+    private bool paused;
+    private bool escapePressed;
+
+    private PauseMenuControls pauseMenuControls;
+
     // When the menu is shown at first, the main menu is set to be active,
     // while the settings menu should not be shown
     void Start()
     {
-        mainMenu.SetActive(true);
-        settingsMenu.SetActive(false);
-
-        // Menu player properties initialization
-        playerController = FindObjectOfType<PlayerController>();
-        player1InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player1Name);
-        player2InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player2Name);
-        player1InputField.onValueChanged.AddListener((string value) => ChangePlayer1Name(value));
-        player2InputField.onValueChanged.AddListener((string value) => ChangePlayer2Name(value));
-
-        // When the game starts, both players have different names
-        player1NameAlert.sprite = tickSprite;
-        player2NameAlert.sprite = tickSprite;
-
-        // Setting the player ids of color choices
-        long player1Id = DefaultValues.player1Id;
-        long player2Id = DefaultValues.player2Id;
-
-        foreach (ColorChoice colorChoice in player1ColorChoices)
-            colorChoice.SetPlayerId(player1Id);
-        foreach (ColorChoice colorChoice in player2ColorChoices)
-            colorChoice.SetPlayerId(player2Id);
-
-        // Setting the color choices as picked and unavailable
-        string player1ColorHexValue = playerController.GetPlayerColorHexValue(player1Id);
-        string player2ColorHexValue = playerController.GetPlayerColorHexValue(player2Id);
-        for (int i = 0; i < player1ColorChoices.Count; i++)
+        if (menuType == MenuType.MainMenu)
         {
-            ColorChoice colorChoice = player1ColorChoices[i];
-            if (colorChoice.GetColorHexValue() == player1ColorHexValue)
-                colorChoice.MakePicked();
-            else if (colorChoice.GetColorHexValue() == player2ColorHexValue)
-                colorChoice.MakeUnavailable();
+            mainMenu.SetActive(true);
+            settingsMenu.SetActive(false);
+
+            // Menu player properties initialization
+            playerController = FindObjectOfType<PlayerController>();
+            player1InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player1Name);
+            player2InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player2Name);
+            player1InputField.onValueChanged.AddListener((string value) => ChangePlayer1Name(value));
+            player2InputField.onValueChanged.AddListener((string value) => ChangePlayer2Name(value));
+
+            // When the game starts, both players have different names
+            player1NameAlert.sprite = tickSprite;
+            player2NameAlert.sprite = tickSprite;
+
+            // Setting the player ids of color choices
+            long player1Id = DefaultValues.player1Id;
+            long player2Id = DefaultValues.player2Id;
+
+            foreach (ColorChoice colorChoice in player1ColorChoices)
+                colorChoice.SetPlayerId(player1Id);
+            foreach (ColorChoice colorChoice in player2ColorChoices)
+                colorChoice.SetPlayerId(player2Id);
+
+            // Setting the color choices as picked and unavailable
+            string player1ColorHexValue = playerController.GetPlayerColorHexValue(player1Id);
+            string player2ColorHexValue = playerController.GetPlayerColorHexValue(player2Id);
+            for (int i = 0; i < player1ColorChoices.Count; i++)
+            {
+                ColorChoice colorChoice = player1ColorChoices[i];
+                if (colorChoice.GetColorHexValue() == player1ColorHexValue)
+                    colorChoice.MakePicked();
+                else if (colorChoice.GetColorHexValue() == player2ColorHexValue)
+                    colorChoice.MakeUnavailable();
+            }
+            for (int i = 0; i < player2ColorChoices.Count; i++)
+            {
+                ColorChoice colorChoice = player2ColorChoices[i];
+                if (colorChoice.GetColorHexValue() == player2ColorHexValue)
+                    colorChoice.MakePicked();
+                else if (colorChoice.GetColorHexValue() == player1ColorHexValue)
+                    colorChoice.MakeUnavailable();
+            }
         }
-        for (int i = 0; i < player2ColorChoices.Count; i++)
+        else if (menuType == MenuType.PauseMenu)
         {
-            ColorChoice colorChoice = player2ColorChoices[i];
-            if (colorChoice.GetColorHexValue() == player2ColorHexValue)
-                colorChoice.MakePicked();
-            else if (colorChoice.GetColorHexValue() == player1ColorHexValue)
-                colorChoice.MakeUnavailable();
+            pauseMenuControls = new PauseMenuControls();
+            pauseMenuControls.Enable();
+            paused = false;
+            escapePressed = false;
         }
+    }
+
+    private void Update()
+    {
+        bool isEscapeKeyPressed = pauseMenuControls.PauseMenu.Escape.ReadValue<float>() == 1;
+        if (!escapePressed && isEscapeKeyPressed)
+        {
+            escapePressed = true;
+            Debug.Log("Pressed");
+            // TODO
+        }
+        else if (escapePressed && !isEscapeKeyPressed)
+        {
+            escapePressed = false;
+            Debug.Log("Stopped pressing");
+        }
+    }
+
+    // Opens the pause menu
+    public void OpenPauseMenu()
+    {
+        pauseMenu.SetActive(true);
+    }
+
+    // Closes the pause menu
+    public void ClosePauseMenu()
+    {
+        pauseMenu.SetActive(false);
+    }
+
+    // Returns true if the game is currently paused
+    public bool IsPaused()
+    {
+        return paused;
     }
 
     // Toggles between the main menu and the settings menu
