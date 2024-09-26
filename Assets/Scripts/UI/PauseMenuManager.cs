@@ -29,7 +29,6 @@ public class PauseMenuManager : MenuManager
         // for the closing animation to take place, but the scale of the
         // background element is set to (0, 0, 1) so it is not visible
         pauseMenu.SetActive(true);
-        Debug.Log(pauseMenu.transform);
         pauseMenu.transform.localScale = new Vector3(0, 0, 1);
     }
 
