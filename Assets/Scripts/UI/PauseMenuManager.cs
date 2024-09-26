@@ -20,6 +20,7 @@ public class PauseMenuManager : MenuManager
     // Sets the pause menu as disabled
     void Start()
     {
+        soundManager = FindObjectOfType<SoundManager>();
         pauseMenuControls = new PauseMenuControls();
         pauseMenuControls.Enable();
         paused = false;
@@ -43,7 +44,6 @@ public class PauseMenuManager : MenuManager
             // Set that the escape key is pressed and toggle the pause menu
             escapePressed = true;
             paused = !paused;
-            //pauseMenu.SetActive(paused);
             pauseMenuAnimator.SetBool("paused", paused);
         }
         // If the escape key isn't pressed, but it was pressed last frame
