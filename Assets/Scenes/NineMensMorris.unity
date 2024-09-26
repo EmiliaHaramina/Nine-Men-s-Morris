@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 241041045}
   - component: {fileID: 241041044}
   m_Layer: 5
-  m_Name: Background
+  m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,7 +189,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1623041909}
   m_RootOrder: 0
@@ -427,7 +427,11 @@ PrefabInstance:
     - target: {fileID: 8895849937239306451, guid: b65ce01fb8c0b604e803ef22da3452ed, type: 3}
       propertyPath: pauseMenu
       value: 
-      objectReference: {fileID: 1623041908}
+      objectReference: {fileID: 241041042}
+    - target: {fileID: 8895849937239306451, guid: b65ce01fb8c0b604e803ef22da3452ed, type: 3}
+      propertyPath: pauseMenuAnimator
+      value: 
+      objectReference: {fileID: 1623041913}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65ce01fb8c0b604e803ef22da3452ed, type: 3}
 --- !u!4 &409811938 stripped
@@ -740,8 +744,9 @@ GameObject:
   - component: {fileID: 1623041912}
   - component: {fileID: 1623041911}
   - component: {fileID: 1623041910}
+  - component: {fileID: 1623041913}
   m_Layer: 5
-  m_Name: PauseMenu
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -829,6 +834,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!95 &1623041913
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623041908}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8d2982659de6dc441ac2bcce39bc59a3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1733696033
 GameObject:
   m_ObjectHideFlags: 0
