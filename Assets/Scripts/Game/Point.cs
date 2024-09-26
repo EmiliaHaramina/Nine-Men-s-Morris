@@ -31,19 +31,19 @@ public class Point : MonoBehaviour
     }
 
     // Returns the index of the circle of this point
-    public float GetCircleIndex()
+    public int GetCircleIndex()
     {
         return position.x;
     }
 
     // Returns the index of the column of this point
-    public float GetColumnIndex()
+    public int GetRowIndex()
     {
         return position.y;
     }
 
     // Returns the index of the row of this point
-    public float GetRowIndex()
+    public int GetColumnIndex()
     {
         return position.z;
     }

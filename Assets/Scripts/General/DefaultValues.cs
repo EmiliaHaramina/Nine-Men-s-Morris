@@ -24,7 +24,8 @@ static public class DefaultValues
     static public string colorUnavailableHexValue = "#FF0000";
     static public float panelColorTransparency = 100f;
 
-    // Default value for player id of point that is not
-    // taken
+    // Default value for player id of point that is not taken
     static public long freePointPlayerId = -1;
+    // Default thickness of a line between points on the board
+    static public float lineThickness = 1.5f;
 }
