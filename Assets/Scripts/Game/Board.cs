@@ -32,10 +32,9 @@ public class Board : MonoBehaviour
         int rowCenter = 1;
 
         // The width and height of the board
-        var corners = new Vector3[4];
-        GetComponent<RectTransform>().GetWorldCorners(corners);
-        var width = Mathf.Abs(corners[2].x - corners[0].x);
-        var height = Mathf.Abs(corners[2].y - corners[0].y);
+        Rect rect = GetComponent<RectTransform>().rect;
+        var width = Mathf.Abs(rect.xMax - rect.xMin);
+        var height = Mathf.Abs(rect.yMax - rect.yMin);
 
         var widthPerCircle = (width / 2) / ringNumber;
         var heightPerCircle = (height / 2) / ringNumber;
