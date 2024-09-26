@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 60444545604208702}
   - component: {fileID: 4337024437373995810}
   m_Layer: 5
-  m_Name: ButtonClickSoundSource (1)
+  m_Name: ButtonClickSoundSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

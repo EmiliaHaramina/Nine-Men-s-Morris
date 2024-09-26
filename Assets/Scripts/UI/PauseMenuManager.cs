@@ -58,15 +58,11 @@ public class PauseMenuManager : MenuManager
             escapePressed = false;
     }
 
-    // Opens the pause menu
-    public void OpenPauseMenu()
+    // Unpauses the game
+    public void UnpauseGame()
     {
-        pauseMenu.SetActive(true);
-    }
-
-    // Closes the pause menu
-    public void ClosePauseMenu()
-    {
-        pauseMenu.SetActive(false);
+        paused = false;
+        gameManager.SetGamePaused(paused);
+        pauseMenuAnimator.SetBool("paused", paused);
     }
 }
