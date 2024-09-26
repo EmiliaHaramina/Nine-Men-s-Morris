@@ -7,19 +7,20 @@ public class MusicController : MonoBehaviour
     // The source of the background music
     [SerializeField] private AudioSource soundSource;
     // The volume of the background music
-    [SerializeField] private float volume;
+    private float volume;
     // A bool tracking whether the background music is currently being played
-    [SerializeField] private bool soundPlaying;
+    private bool soundPlaying;
     // A menu controller to change the speaker image
     private MenuManager menuManager;
     // The music volume controller to disable the scrollbar when background
     // music is muted
-    [SerializeField] private MusicVolumeController musicVolumeController;
+    private MusicVolumeController musicVolumeController;
 
     // Initializes the background music and its volume depending on the player prefs
     public void Initialize()
     {
         menuManager = FindObjectOfType<MenuManager>();
+        musicVolumeController = FindObjectOfType<MusicVolumeController>();
 
         SetSoundFromPlayerPrefs();
         SetVolumeFromPlayerPrefs();

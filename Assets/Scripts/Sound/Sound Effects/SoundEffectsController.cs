@@ -4,19 +4,20 @@ using UnityEngine;
 public class SoundEffectsController : MonoBehaviour
 {
     // The volume of sound effects
-    [SerializeField] private float volume;
+    private float volume;
     // A bool tracking whether sound effects can be played
-    [SerializeField] private bool soundPlaying;
+    private bool soundPlaying;
     // A menu controller to change the speaker image
     private MenuManager menuManager;
     // The sound effects volume controller to disable the scrollbar when sound effects
     // are muted
-    [SerializeField] private SoundEffectsVolumeController soundEffectsVolumeController;
+    private SoundEffectsVolumeController soundEffectsVolumeController;
 
     // Initializes the sound effects and their volume depending on the player prefs
     public void Initialize()
     {
         menuManager = FindObjectOfType<MenuManager>();
+        soundEffectsVolumeController = FindObjectOfType<SoundEffectsVolumeController>();
 
         SetSoundFromPlayerPrefs();
         SetVolumeFromPlayerPrefs();

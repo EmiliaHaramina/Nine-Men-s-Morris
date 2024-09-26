@@ -17,7 +17,7 @@ public class ColorChoice : MonoBehaviour
     // Id of the player this color choice is for
     private long playerId;
     // The menu controller that is called when a color choice is clicked
-    private MenuManager menuManager;
+    private MainMenuManager mainMenuManager;
 
     // An enum for defining the state of the color choice
     private enum State
@@ -33,7 +33,7 @@ public class ColorChoice : MonoBehaviour
     // available
     void Awake()
     {
-        menuManager = FindObjectOfType<MenuManager>();
+        mainMenuManager = FindObjectOfType<MainMenuManager>();
 
         color = colorImage.color;
         colorHexValue = "#" + ColorUtility.ToHtmlStringRGB(color);
@@ -120,7 +120,7 @@ public class ColorChoice : MonoBehaviour
     // Changes the player's color
     public void ChangePlayerColor()
     {
-        menuManager.ChangePlayerColor(playerId, colorHexValue);
+        mainMenuManager.ChangePlayerColor(playerId, colorHexValue);
     }
 
     // Returns true if the state of the color choice is picked

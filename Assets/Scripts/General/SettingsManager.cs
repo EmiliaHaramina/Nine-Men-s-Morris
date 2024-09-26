@@ -3,8 +3,6 @@ using UnityEngine;
 // The settings manager contains settings logic
 public class SettingsManager : MonoBehaviour
 {
-    // Player controller
-    private PlayerController playerController;
     // Background music volume controller
     private MusicVolumeController musicVolumeController;
     // Background music controller
@@ -19,7 +17,6 @@ public class SettingsManager : MonoBehaviour
     void Start()
     {
         // Finding all required controllers
-        playerController = FindObjectOfType<PlayerController>();
         musicVolumeController = FindObjectOfType<MusicVolumeController>();
         musicController = FindObjectOfType<MusicController>();
         soundEffectsVolumeController = FindObjectOfType<SoundEffectsVolumeController>();
@@ -27,9 +24,6 @@ public class SettingsManager : MonoBehaviour
 
         // Initializes player prefs
         PlayerPrefsKeys.Initialize();
-
-        // Initializes the players
-        playerController.Initialize();
 
         // Initializes background music volume
         musicVolumeController.Initialize();

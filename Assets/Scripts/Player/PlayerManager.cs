@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // The player controller is tresponsible for the properties of players
-public class PlayerController : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     // The player properties class contains all properties of a player
     private class PlayerProperties
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private List<PlayerProperties> players = new List<PlayerProperties>();
 
     // Initializes the player's names and colors according to the player prefs
-    public void Initialize()
+    void Start()
     {
         PlayerProperties player1 = new PlayerProperties(DefaultValues.player1Id, PlayerPrefsKeys.player1Name, PlayerPrefsKeys.player1Color);
         PlayerProperties player2 = new PlayerProperties(DefaultValues.player2Id, PlayerPrefsKeys.player2Name, PlayerPrefsKeys.player2Color);
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
             if (players[i].id == id)
                 return players[i].colorHexValue;
         // If the player with this id doesn't exit, return black
-        return "#FFFFFF";
+        return "#000000";
     }
 
     // Sets the player's name from the player prefs
