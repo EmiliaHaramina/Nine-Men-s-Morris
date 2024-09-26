@@ -13,6 +13,11 @@ public class Board : MonoBehaviour
     // Prefab for a line betwene points
     [SerializeField] private GameObject linePrefab;
 
+    // Sound effects available for the board
+    [SerializeField] private SoundEffectSource buttonClickSoundEffectSource;
+    [SerializeField] private SoundEffectSource legalMoveSoundEffectSource;
+    [SerializeField] private SoundEffectSource illegalMoveSoundEffectSource;
+
     // Initializes the board according to the ring number
     public void Initialize(int ringNumber)
     {
