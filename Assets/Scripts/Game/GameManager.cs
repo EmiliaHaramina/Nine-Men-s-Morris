@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     // Bool representing that the script is waiting for a player
     // to play their move
     static private bool waiting;
+    // Bool representing the end of the game
+    static private bool gameEnded;
     // The board that player can play on
     static private Board board;
     // The current phase of the game
@@ -69,6 +71,8 @@ public class GameManager : MonoBehaviour
         gamePaused = false;
         // The script is not waiting for the player at the start
         waiting = false;
+        // The game is not ended at the start
+        gameEnded = false;
         // Initializes the board
         board = FindObjectOfType<Board>();
         board.Initialize(ringNumber);
@@ -112,9 +116,9 @@ public class GameManager : MonoBehaviour
         if (gamePaused || waiting)
             return;
 
-        // If the game has started, perform an action based on the current phase
-        // of the game
-        if (gameStarted)
+        // If the game has started and not ended, perform an action
+        // based on the current phase of the game
+        if (gameStarted && !gameEnded)
         {
             // If players have no more men in hand, the placing phase of
             // the game is over
@@ -137,6 +141,24 @@ public class GameManager : MonoBehaviour
             if (currentPlayerMenOnBoard == 3 && gamePhase == GamePhase.Moving1)
             {
                 gamePhase = GamePhase.Flying1;
+            }
+
+            int totalMenInHand = player1MenInHand + player2MenInHand;
+
+            // If the player has only 2 pieces left on the board and player have no more
+            // pieces to plave, the other player has won the game
+            if (currentPlayerMenOnBoard == 2 && totalMenInHand == 0)
+            {
+                CurrentPlayerLostGame();
+                return;
+            }
+            // Else, if the other player has only 2 pieces left on the board and player have
+            // no more pieces to place, the current player has won the game
+            else if ((player1MenOnBoard == 2 || player2MenOnBoard == 2) &&
+                totalMenInHand == 0)
+            {
+                CurrentPlayerWonGame();
+                return;
             }
 
             // Update the board to show legal moves
@@ -162,6 +184,40 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    // Function which ends the game because the current player lost
+    static public void CurrentPlayerLostGame()
+    {
+        // Shows the winner menu
+        string playerNameKey;
+        if (currentPlayerId == DefaultValues.player1Id)
+            playerNameKey = PlayerPrefsKeys.player2Name;
+        else
+            playerNameKey = PlayerPrefsKeys.player1Name;
+        gameInformationController.ShowWinnerText(PlayerPrefs.GetString(playerNameKey));
+        EndGame();
+    }
+
+    // Function which ends the game because the current player won
+    static public void CurrentPlayerWonGame()
+    {
+        // Shows the winner menu
+        gameInformationController.ShowWinnerText(GetCurrentPlayerName());
+        EndGame();
+    }
+
+    // Ends the game
+    static public void EndGame()
+    {
+        // Set that the game has ended
+        gameEnded = true;
+        // Clear the board
+        board.ClearBoard();
+        // Disables the pause menu
+        PauseMenuManager.DisablePauseMenu();
+        // Disables the player instructions
+        gameInformationController.HideInstructions();
     }
 
     // Callback function for an illegal point that has been clicked
@@ -269,13 +325,15 @@ public class GameManager : MonoBehaviour
                 board.PlayRemoveAnimation(point);
                 // Decrease the number of men on the board for the other player
                 if (currentPlayerId == DefaultValues.player1Id)
-                {
                     player2MenOnBoard--;
-                }
                 else if (currentPlayerId == DefaultValues.player2Id)
-                {
                     player1MenOnBoard--;
-                }
+                // If one of the players has only 2 pieces left on the board and
+                // players have no more pieces to place, the current player has
+                // won the game
+                if ((player1MenOnBoard == 2 || player2MenOnBoard == 2) &&
+                    (player1MenInHand + player2MenInHand) == 0)
+                    CurrentPlayerWonGame();
 
                 // Decrease the number of pieces to remove
                 piecesToRemove--;
@@ -303,7 +361,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Returns the name of the current player
-    public string GetCurrentPlayerName()
+    static public string GetCurrentPlayerName()
     {
         return playerManager.GetPlayerName(currentPlayerId);
     }

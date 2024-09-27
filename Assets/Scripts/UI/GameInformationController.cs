@@ -14,12 +14,22 @@ public class GameInformationController : MonoBehaviour
     [SerializeField] private TMP_Text player1PiecesLeft;
     [SerializeField] private TMP_Text player2PiecesLeft;
 
+    // Text objects that show the winner of the game
+    [SerializeField] private GameObject winnerMenu;
+    [SerializeField] private TMP_Text winnerText;
+
     // Initialize the text instructions so no text is visible
     private void Start()
     {
         playerInstructions.gameObject.SetActive(true);
         playerInstructions.text = "";
         piecesLeftText.SetActive(false);
+
+        // The pause menu is set as active because it is required to be active
+        // for the closing animation to take place, but the scale of the
+        // background element is set to (0, 0, 1) so it is not visible
+        winnerMenu.SetActive(true);
+        //winnerMenu.transform.localScale = new Vector3(0, 0, 1);
     }
 
     // Changes the text to tell the current player they should place
@@ -74,5 +84,18 @@ public class GameInformationController : MonoBehaviour
     public void HidePiecesLeftText()
     {
         piecesLeftText.SetActive(false);
+    }
+    
+    // Hides the instructions text
+    public void HideInstructions()
+    {
+        playerInstructions.gameObject.SetActive(false);
+    }
+
+    // Shows the winner of the game
+    public void ShowWinnerText(string playerName)
+    {
+        winnerMenu.GetComponent<Animator>().SetBool("gameEnded", true);
+        winnerText.text = playerName + " WON\nTHE GAME!";
     }
 }

@@ -168,8 +168,7 @@ public class Board : MonoBehaviour
 
                 if (!hasMoves)
                 {
-                    // TODO: End game, opposing player is the winner
-                    Debug.Log("Winner!");
+                    CurrentPlayerLostGame();
                 }
                 break;
             // If it is the second part of the moving phase

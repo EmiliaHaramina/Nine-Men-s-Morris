@@ -67,10 +67,12 @@ public class Point : MonoBehaviour
         return position.z;
     }
 
-    // Removes all listeners from the point
+    // Removes all listeners from the point and removes the
+    // legal move animation
     public void Clear()
     {
         button.onClick.RemoveAllListeners();
+        legalMoveAnimator.SetBool("legalMove", false);
     }
 
     // If this point has a defined player id, change it

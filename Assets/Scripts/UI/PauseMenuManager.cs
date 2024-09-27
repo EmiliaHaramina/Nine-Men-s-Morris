@@ -19,6 +19,9 @@ public class PauseMenuManager : MenuManager
     // The game manager should be signalled to when the game is paused
     private GameManager gameManager;
 
+    // Bool that checks whether the pause menu is disabled
+    static private bool pauseMenuDisabled;
+
     // On starting, initializes the pause menu controls and the required booleans
     // Sets the pause menu as disabled
     void Start()
@@ -30,6 +33,7 @@ public class PauseMenuManager : MenuManager
         pauseMenuControls.Enable();
         paused = false;
         escapePressed = false;
+        pauseMenuDisabled = false;
 
         // The pause menu is set as active because it is required to be active
         // for the closing animation to take place, but the scale of the
@@ -41,6 +45,9 @@ public class PauseMenuManager : MenuManager
     // In the update function, check whether the player pressed the escape button
     void Update()
     {
+        if (pauseMenuDisabled && pauseMenu.activeSelf)
+            pauseMenu.SetActive(false);
+
         // Saves whether the escape button is currently pressed
         bool isEscapeKeyPressed = pauseMenuControls.PauseMenu.Escape.ReadValue<float>() == 1;
         // If the escape key is pressed and it was not pressed last frame
@@ -64,5 +71,11 @@ public class PauseMenuManager : MenuManager
         paused = false;
         gameManager.SetGamePaused(paused);
         pauseMenuAnimator.SetBool("paused", paused);
+    }
+
+    // Disables the pause menu
+    static public void DisablePauseMenu()
+    {
+        pauseMenuDisabled = true;
     }
 }
