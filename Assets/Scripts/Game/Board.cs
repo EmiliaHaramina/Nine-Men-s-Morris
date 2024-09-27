@@ -206,14 +206,45 @@ public class Board : MonoBehaviour
                 break;
             // If it is the removing phase
             case GamePhase.Removing:
-                // For each point on the board, if the point is from the other player,
-                // make it pickable, otherwise, make it illegal
+                // TODO: Cannot remove in mills unless that is the only choice
+                // For each point on the board, if the point is from the other player
+                // and is NOT included in any mills, make it pickable, otherwise,
+                // make it illegal
+                bool allPointsInMills = true;
                 foreach (Point point in board)
+                {
                     if (point.GetPlayerId() != DefaultValues.freePointPlayerId &&
                         point.GetPlayerId() != currentPlayerId)
-                        point.SetPickable();
+                    {
+                        // Checks number of mills from opposing player for this point 
+                        int millNumber = MillNumber(point, 3 - currentPlayerId, false);
+                        if (millNumber == 0)
+                        {
+                            point.SetPickable();
+                            allPointsInMills = false;
+                        }
+                        else
+                            point.SetIllegal();
+                    }
                     else
+                    {
                         point.SetIllegal();
+                    }
+                }
+
+                // If all removable points are included in a mill, the board is cleared and
+                // all opposing player's points are made pickable
+                if (allPointsInMills)
+                {
+                    foreach (Point point in board)
+                        point.Clear();
+
+                    foreach (Point point in board)
+                        if (point.GetPlayerId() != DefaultValues.freePointPlayerId &&
+                        point.GetPlayerId() != currentPlayerId)
+                            point.SetPickable();
+                }
+
                 break;
         }
     }
@@ -242,7 +273,7 @@ public class Board : MonoBehaviour
 
     // Returns true if a mill is formed for player with the
     // given id when looking at the given point
-    public int MillNumber(Point point, long playerId)
+    public int MillNumber(Point point, long playerId, bool activateMillSymbol)
     {
         // A new list which will store all second neighbours of this
         // point (second neighbour = difference of 2 in coordinates)
@@ -313,9 +344,12 @@ public class Board : MonoBehaviour
                     millNumber++;
 
                     // Activate mill symbols on the points forming a mill
-                    point.ActivateMillSymbol();
-                    point1.ActivateMillSymbol();
-                    point2.ActivateMillSymbol();
+                    if (activateMillSymbol)
+                    {
+                        point.ActivateMillSymbol();
+                        point1.ActivateMillSymbol();
+                        point2.ActivateMillSymbol();
+                    }
                 }
             }
 
