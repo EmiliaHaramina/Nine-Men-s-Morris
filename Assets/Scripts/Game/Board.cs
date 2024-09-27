@@ -130,8 +130,9 @@ public class Board : MonoBehaviour
         // Actions depending on the phase of the gmae
         switch (gamePhase)
         {
-            // If it is the placing phase
+            // If it is the placing phase or the second part of the flying phase
             case GamePhase.Placing:
+            case GamePhase.Flying2:
                 // For each point on the board, if no player is on it, make it available
                 // If there is already a player on that point, make the point illegal
                 foreach (Point point in board)
@@ -194,7 +195,14 @@ public class Board : MonoBehaviour
 
                 break;
             // If it is the flying phase
-            case GamePhase.Flying:
+            case GamePhase.Flying1:
+                foreach (Point point in board)
+                {
+                    if (point.GetPlayerId() == currentPlayerId)
+                        point.SetPickable();
+                    else
+                        point.SetIllegal();
+                }
                 break;
             // If it is the removing phase
             case GamePhase.Removing:

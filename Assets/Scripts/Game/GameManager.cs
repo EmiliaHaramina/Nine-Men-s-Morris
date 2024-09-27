@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
     // The number of player men
     static private int player1MenInHand;
     static private int player2MenInHand;
-    static private long player1MenOnBoard;
-    static private long player2MenOnBoard;
+    static private int player1MenOnBoard;
+    static private int player2MenOnBoard;
     // The player manager
     static private PlayerManager playerManager;
     // The game information controller
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     // The different game phases
     public enum GamePhase
     {
-        Placing, Moving1, Moving2, Flying, Removing
+        Placing, Moving1, Moving2, Flying1, Flying2, Removing
     }
 
     // Starts the game
@@ -127,6 +127,18 @@ public class GameManager : MonoBehaviour
                 gameInformationController.HidePiecesLeftText();
             }
 
+            // If the current player has 3 pieces on the board and the game is in moving phase,
+            // switch it to flying phase for the current player
+            int currentPlayerMenOnBoard = 0;
+            if (currentPlayerId == DefaultValues.player1Id)
+                currentPlayerMenOnBoard = player1MenOnBoard;
+            else if (currentPlayerId == DefaultValues.player2Id)
+                currentPlayerMenOnBoard = player2MenOnBoard;
+            if (currentPlayerMenOnBoard == 3 && gamePhase == GamePhase.Moving1)
+            {
+                gamePhase = GamePhase.Flying1;
+            }
+
             // Update the board to show legal moves
             board.UpdateCurrentRound(gamePhase, currentPlayerId);
             waiting = true;
@@ -138,12 +150,12 @@ public class GameManager : MonoBehaviour
                     gameInformationController.SetPlacingText(GetCurrentPlayerName());
                     break;
                 case GamePhase.Moving1:
+                case GamePhase.Flying1:
                     gameInformationController.SetMoving1Text(GetCurrentPlayerName());
                     break;
                 case GamePhase.Moving2:
+                case GamePhase.Flying2:
                     gameInformationController.SetMoving2Text(GetCurrentPlayerName());
-                    break;
-                case GamePhase.Flying:
                     break;
                 case GamePhase.Removing:
                     gameInformationController.SetRemovingText(GetCurrentPlayerName());
@@ -236,7 +248,16 @@ public class GameManager : MonoBehaviour
                 // Goes back to part one of the moving phase
                 gamePhase = GamePhase.Moving1;
                 break;
-            case GamePhase.Flying:
+            case GamePhase.Flying1:
+                // Sets the point to be a moving point
+                board.SetMoving(point, true);
+                // Moves to part two of the flying phase
+                gamePhase = GamePhase.Flying2;
+                // Saves the current point as the moving point
+                movingPoint = point;
+                waiting = false;
+                return;
+            case GamePhase.Flying2:
                 break;
             case GamePhase.Removing:
                 // Removes the other player's man from the point
