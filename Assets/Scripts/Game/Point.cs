@@ -101,6 +101,9 @@ public class Point : MonoBehaviour
     // Illegal point has been clicked, tell GameManager
     private void IllegalPointClicked()
     {
+        // If the game is paused, don't do anything
+        if (GameManager.IsGamePaused())
+            return;
         GameManager.IllegalPointClicked();
     }
 
@@ -108,6 +111,9 @@ public class Point : MonoBehaviour
     // animation
     private void LegalPointClicked()
     {
+        // If the game is paused, don't do anything
+        if (GameManager.IsGamePaused())
+            return;
         legalMoveAnimator.SetBool("legalMove", false);
         GameManager.LegalPointClicked(this);
     }

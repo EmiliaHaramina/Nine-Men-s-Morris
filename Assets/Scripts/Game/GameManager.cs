@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     // Bool representing whether the game is currently paused
-    private bool gamePaused;
+    static private bool gamePaused;
     // Bool representing whether the game has started
     private bool gameStarted;
     // Bool representing that the script is waiting for a player
@@ -167,12 +167,16 @@ public class GameManager : MonoBehaviour
     // Callback function for an illegal point that has been clicked
     static public void IllegalPointClicked()
     {
+        if (gamePaused)
+            return;
         board.PlayIllegalMoveSoundEffect();
     }
 
     // Callback function for a legal point that has been clicked
     static public void LegalPointClicked(Point point)
     {
+        if (gamePaused)
+            return;
         // Plays the legal move sound effect
         board.PlayLegalMoveSoundEffect();
         // Action depending on the current game phase
@@ -307,6 +311,12 @@ public class GameManager : MonoBehaviour
     // Sets whether the game is paused
     public void SetGamePaused(bool gamePaused)
     {
-        this.gamePaused = gamePaused;
+        GameManager.gamePaused = gamePaused;
+    }
+
+    // Returns whether the game is paused
+    static public bool IsGamePaused()
+    {
+        return gamePaused;
     }
 }
