@@ -171,6 +171,10 @@ public class GameManager : MonoBehaviour
                     player2MenInHand--;
                     gameInformationController.SetPlayer2PiecesLeftText(player2MenInHand);
                 }
+
+                // Check if a mill was formed
+                int millFormed = board.MillNumber(point, currentPlayerId);
+                Debug.Log(millFormed + " mills formed!");
                 break;
         }
 

@@ -149,11 +149,86 @@ public class Board : MonoBehaviour
         }
     }
 
+    // Returns true if a mill is formed for player with the
+    // given id when looking at the given point
+    public int MillNumber(Point point, long playerId)
+    {
+        // A new list which will store all second neighbours of this
+        // point (second neighbour = difference of 2 in coordinates)
+        List<Point> secondNeighbours = new List<Point>();
+        // Stores the number of mills made
+        int millNumber = 0;
+
+        // The given point's coordinates
+        int pointX = point.GetCircleIndex();
+        int pointY = point.GetColumnIndex();
+        int pointZ = point.GetRowIndex();
+
+        // Go through each point on the board
+        foreach (Point otherPoint in board)
+        {
+            // If this is the point we are observing or if it not owned
+            // by the player we are observing, ignore it
+            if (point == otherPoint || otherPoint.GetPlayerId() != playerId)
+                continue;
+
+            // The other point's coordinates
+            int otherPointX = otherPoint.GetCircleIndex();
+            int otherPointY = otherPoint.GetColumnIndex();
+            int otherPointZ = otherPoint.GetRowIndex();
+
+            // Calculating the difference of the two point's coordinate
+            // values
+            int difference = Mathf.Abs(pointX - otherPointX) +
+                Mathf.Abs(pointY - otherPointY) + Mathf.Abs(pointZ - otherPointZ);
+
+            // If the value is 2 or less, these points are second neigbours
+            // and that point is added to the second neighbour list
+            if (difference <= 2)
+                secondNeighbours.Add(otherPoint);
+        }
+
+        // For each pair of second neighbours, check if they make a mill
+        // with the given point
+        foreach (Point point1 in secondNeighbours)
+            foreach (Point point2 in secondNeighbours)
+            {
+                // If the pair of points contains the same points, ignore
+                // that pair
+                if (point1 == point2)
+                    continue;
+
+                // If the three points form a line, in other words, if only
+                // one coordinates changed through the three points, while the
+                // other coordinates are the same, these three points form
+                // a mill
+                bool xCoordinateSame = pointX == point1.GetCircleIndex() &&
+                    pointX == point2.GetCircleIndex();
+                bool yCoordinateSame = pointY == point1.GetColumnIndex() &&
+                    pointY == point2.GetColumnIndex();
+                bool zCoordinateSame = pointZ == point1.GetRowIndex() &&
+                    pointZ == point2.GetRowIndex();
+
+                // If two coordinates are the same, a mill was formed
+                // Additionally, if the y and z coordinate are the same, there is
+                // a chance this could be the corners of rings, which do not have a line
+                // connecting them, so it is also checked that y + z are not even,
+                // because if they are even, it means they are on the diagonal
+                if ((xCoordinateSame && yCoordinateSame) ||
+                    (xCoordinateSame && zCoordinateSame) ||
+                    (yCoordinateSame && zCoordinateSame && (pointY + pointZ) % 2 != 0))
+                    millNumber++;
+            }
+
+        // Returns the number of formed mills divided by 2, since
+        // the neighbours are looked at as a pair
+        return millNumber / 2;
+    }
+
     // Sets the player id of the current point
     public void SetPointPlayerId(Point point, long currentPlayerId)
     {
         point.SetPlayerId(currentPlayerId);
-        // TODO: Check for mills
     }
 
     // Plays the sound effect for an illegal move on the board
