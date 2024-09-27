@@ -124,8 +124,7 @@ public class Board : MonoBehaviour
     public void UpdateCurrentRound(GamePhase gamePhase, long currentPlayerId)
     {
         // Clears the board first
-        foreach (Point point in board)
-            point.Clear();
+        ClearBoard();
 
         // Actions depending on the phase of the gmae
         switch (gamePhase)
@@ -236,8 +235,7 @@ public class Board : MonoBehaviour
                 // all opposing player's points are made pickable
                 if (allPointsInMills)
                 {
-                    foreach (Point point in board)
-                        point.Clear();
+                    ClearBoard();
 
                     foreach (Point point in board)
                         if (point.GetPlayerId() != DefaultValues.freePointPlayerId &&
@@ -247,6 +245,13 @@ public class Board : MonoBehaviour
 
                 break;
         }
+    }
+
+    // Clears all points on the board
+    public void ClearBoard()
+    {
+        foreach (Point point in board)
+            point.Clear();
     }
 
     // Returns points that are neighbours of the given point
