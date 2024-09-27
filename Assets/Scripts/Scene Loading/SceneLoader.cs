@@ -32,7 +32,7 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] private float fadeInTime = .5f;
     [SerializeField] private float fadeOutTime = .5f;
 
-    // TODO: Fade bools to start and stop fading
+    // Fade bools to start and stop fading
     private bool fadeIn = true;
     private bool fadeOut = false;
 
