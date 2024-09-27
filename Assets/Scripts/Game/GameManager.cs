@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     // The player manager
     static private PlayerManager playerManager;
     // The game information controller
-    private GameInformationController gameInformationController;
+    static private GameInformationController gameInformationController;
 
     // TODO: Remove later
     [SerializeField] private int ringNumber;
@@ -80,6 +80,11 @@ public class GameManager : MonoBehaviour
 
         player1PickButton.onClick.AddListener(() => SetStartingPlayerTurn(DefaultValues.player1Id));
         player2PickButton.onClick.AddListener(() => SetStartingPlayerTurn(DefaultValues.player2Id));
+
+        // Shows and initializes the text letting players know how many more pieces they have
+        gameInformationController.ShowPiecesLeftText();
+        gameInformationController.SetPlayer1PiecesLeftText(player1MenInHand);
+        gameInformationController.SetPlayer2PiecesLeftText(player2MenInHand);
     }
 
     // Sets which player's turn it currently is, hides the game start
@@ -107,7 +112,11 @@ public class GameManager : MonoBehaviour
             // the game is over
             if (player1MenInHand == 0 && player2MenInHand == 0)
             {
+                // The game phase moves to the moving phase
                 gamePhase = GamePhase.Moving;
+                // Hides the text letting players know how many more pieces
+                // they have left
+                gameInformationController.HidePiecesLeftText();
             }
 
             // Update the board to show legal moves
@@ -154,11 +163,13 @@ public class GameManager : MonoBehaviour
                 {
                     player1MenOnBoard++;
                     player1MenInHand--;
+                    gameInformationController.SetPlayer1PiecesLeftText(player1MenInHand);
                 }
                 else if (currentPlayerId == DefaultValues.player2Id)
                 {
                     player2MenOnBoard++;
                     player2MenInHand--;
+                    gameInformationController.SetPlayer2PiecesLeftText(player2MenInHand);
                 }
                 break;
         }
