@@ -18,6 +18,9 @@ public class GameInformationController : MonoBehaviour
     [SerializeField] private GameObject winnerMenu;
     [SerializeField] private TMP_Text winnerText;
 
+    // The victory sound effect source
+    [SerializeField] private SoundEffectSource victorySoundEffectSource;
+
     // Initialize the text instructions so no text is visible
     private void Start()
     {
@@ -92,10 +95,11 @@ public class GameInformationController : MonoBehaviour
         playerInstructions.gameObject.SetActive(false);
     }
 
-    // Shows the winner of the game
+    // Shows the winner of the game and plays the victory sound effect
     public void ShowWinnerText(string playerName)
     {
         winnerMenu.GetComponent<Animator>().SetBool("gameEnded", true);
         winnerText.text = playerName + " WON\nTHE GAME!";
+        victorySoundEffectSource.PlaySoundEffect();
     }
 }
