@@ -365,4 +365,11 @@ public class Board : MonoBehaviour
     {
         point.SetMoving(moving);
     }
+
+    // For all points on the board, sets them to non-moving
+    public void ClearMovingPoints()
+    {
+        foreach (Point point in board)
+            point.SetMoving(false);
+    }
 }

@@ -149,7 +149,7 @@ public class Point : MonoBehaviour
     public void SetMoving(bool moving)
     {
         this.moving = moving;
-        outline.enabled = true;
+        outline.enabled = moving;
     }
 
     // Returns true if the piece on this point is moving

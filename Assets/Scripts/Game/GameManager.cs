@@ -204,6 +204,9 @@ public class GameManager : MonoBehaviour
                 waiting = false;
                 return;
             case GamePhase.Moving2:
+                // Sets that all points are not moving anymore
+                board.ClearMovingPoints();
+                gamePhase = GamePhase.Moving1;
                 break;
             case GamePhase.Flying:
                 break;
