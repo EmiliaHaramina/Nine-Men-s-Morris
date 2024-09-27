@@ -226,12 +226,27 @@ public class Board : MonoBehaviour
                 if ((xCoordinateSame && yCoordinateSame) ||
                     (xCoordinateSame && zCoordinateSame) ||
                     (yCoordinateSame && zCoordinateSame && (pointY + pointZ) % 2 != 0))
+                {
+                    // Increase the number of found mills
                     millNumber++;
+
+                    // Activate mill symbols on the points forming a mill
+                    point.ActivateMillSymbol();
+                    point1.ActivateMillSymbol();
+                    point2.ActivateMillSymbol();
+                }
             }
 
         // Returns the number of formed mills divided by 2, since
         // the neighbours are looked at as a pair
         return millNumber / 2;
+    }
+
+    // Deactivates the mill symbols of all points on the board
+    public void ClearMillSymbols()
+    {
+        foreach (Point point in board)
+            point.DeactivateMillSymbol();
     }
 
     // Sets the player id of the given point

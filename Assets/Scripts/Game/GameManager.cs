@@ -219,7 +219,10 @@ public class GameManager : MonoBehaviour
                 // If there are no more pieces to be removed, switch back to the
                 // previous phase
                 if (piecesToRemove == 0)
+                {
                     gamePhase = previousPhase;
+                    board.ClearMillSymbols();
+                }
                 // If there are still more pieces that need to be removed, stay in
                 // the removing phase
                 else

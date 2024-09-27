@@ -28,4 +28,6 @@ static public class DefaultValues
     static public long freePointPlayerId = -1;
     // Default thickness of a line between points on the board
     static public float lineThickness = 1.5f;
+    // Default outline scale
+    static public float outlineScale = 0.36f;
 }

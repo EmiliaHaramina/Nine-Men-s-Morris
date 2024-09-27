@@ -18,6 +18,8 @@ public class Point : MonoBehaviour
     [SerializeField] private Image pieceImage;
     // The button of the point
     [SerializeField] private Button button;
+    // The mill symbol of the point that is shown when a mill is formed
+    [SerializeField] private Image millSymbol;
 
     // A point is defined by its position and the playerId is set to the default one
     // that belong to no player, at the start, it is not interactable
@@ -26,6 +28,7 @@ public class Point : MonoBehaviour
         position = new Vector3Int(circleIndex, rowIndex, columnIndex);
         playerId = DefaultValues.freePointPlayerId;
         button.enabled = true;
+        millSymbol.enabled = false;
     }
 
     // Returns the id of the player occupying this point
@@ -118,5 +121,21 @@ public class Point : MonoBehaviour
     {
         pointAnimator.SetBool("placed", false);
         pointAnimator.SetBool("removed", true);
+    }
+
+    // Activates the mill symbol of the point, giving it the opposite
+    // color of the piece color
+    public void ActivateMillSymbol()
+    {
+        millSymbol.enabled = true;
+        Color pieceColor = pieceImage.color;
+        Color color = new(1f - pieceColor.r, 1f - pieceColor.g, 1f - pieceColor.b);
+        millSymbol.color = color;
+    }
+
+    // Deactivates the mill symbol of the point
+    public void DeactivateMillSymbol()
+    {
+        millSymbol.enabled = false;
     }
 }
