@@ -324,16 +324,20 @@ public class Board : MonoBehaviour
                 if (point1 == point2)
                     continue;
 
+                int point1X = point1.GetCircleIndex();
+                int point1Y = point1.GetColumnIndex();
+                int point1Z = point1.GetRowIndex();
+                int point2X = point2.GetCircleIndex();
+                int point2Y = point2.GetColumnIndex();
+                int point2Z = point2.GetRowIndex();
+
                 // If the three points form a line, in other words, if only
                 // one coordinates changed through the three points, while the
                 // other coordinates are the same, these three points form
                 // a mill
-                bool xCoordinateSame = pointX == point1.GetCircleIndex() &&
-                    pointX == point2.GetCircleIndex();
-                bool yCoordinateSame = pointY == point1.GetColumnIndex() &&
-                    pointY == point2.GetColumnIndex();
-                bool zCoordinateSame = pointZ == point1.GetRowIndex() &&
-                    pointZ == point2.GetRowIndex();
+                bool xCoordinateSame = pointX == point1X && pointX == point1X;
+                bool yCoordinateSame = pointY == point1Y && pointY == point2Y;
+                bool zCoordinateSame = pointZ == point1Z && pointZ == point2Z;
 
                 // If two coordinates are the same, a mill was formed
                 // Additionally, if the y and z coordinate are the same, there is
@@ -344,6 +348,15 @@ public class Board : MonoBehaviour
                     (xCoordinateSame && zCoordinateSame) ||
                     (yCoordinateSame && zCoordinateSame && (pointY + pointZ) % 2 != 0))
                 {
+                    // The maximum allowed difference on all coordinates between
+                    // two points to form a mill is two
+                    int xMaxDifference = Mathf.Max(Mathf.Abs(pointX - point1X), Mathf.Abs(pointX - point2X), Mathf.Abs(point1X - point2X));
+                    int yMaxDifference = Mathf.Max(Mathf.Abs(pointY - point1Y), Mathf.Abs(pointY - point2Y), Mathf.Abs(point1Y - point2Y));
+                    int zMaxDifference = Mathf.Max(Mathf.Abs(pointZ - point1Z), Mathf.Abs(pointZ - point2Z), Mathf.Abs(point1Z - point2Z));
+
+                    if (xMaxDifference > 2 || yMaxDifference > 2 || zMaxDifference > 2)
+                        continue;
+
                     // Increase the number of found mills
                     millNumber++;
 
