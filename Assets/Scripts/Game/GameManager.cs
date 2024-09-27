@@ -222,6 +222,7 @@ public class GameManager : MonoBehaviour
                 waiting = false;
                 return;
             case GamePhase.Moving2:
+            case GamePhase.Flying2:
                 // Sets that all points are not moving anymore
                 board.ClearMovingPoints();
                 // Removes the moving point
@@ -257,8 +258,6 @@ public class GameManager : MonoBehaviour
                 movingPoint = point;
                 waiting = false;
                 return;
-            case GamePhase.Flying2:
-                break;
             case GamePhase.Removing:
                 // Removes the other player's man from the point
                 board.RemovePlayerId(point);
