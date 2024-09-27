@@ -146,6 +146,15 @@ public class Board : MonoBehaviour
             // If it is the flying phase
             case GamePhase.Flying:
                 break;
+            // If it is the removing phase
+            case GamePhase.Removing:
+                foreach (Point point in board)
+                    if (point.GetPlayerId() != DefaultValues.freePointPlayerId &&
+                        point.GetPlayerId() != currentPlayerId)
+                        point.SetPickable();
+                    else
+                        point.SetIllegal();
+                break;
         }
     }
 
@@ -225,10 +234,16 @@ public class Board : MonoBehaviour
         return millNumber / 2;
     }
 
-    // Sets the player id of the current point
+    // Sets the player id of the given point
     public void SetPointPlayerId(Point point, long currentPlayerId)
     {
         point.SetPlayerId(currentPlayerId);
+    }
+
+    // Clears the player id from the given point
+    public void RemovePlayerId(Point point)
+    {
+        point.RemovePlayerId();
     }
 
     // Plays the sound effect for an illegal move on the board
@@ -248,5 +263,11 @@ public class Board : MonoBehaviour
     public void PlayPlaceAnimation(Point point, string colorHexValue)
     {
         point.PlayPlaceAnimation(colorHexValue);
+    }
+
+    // Plays the men remove animation for the given point
+    public void PlayRemoveAnimation(Point point)
+    {
+        point.PlayRemoveAnimation();
     }
 }

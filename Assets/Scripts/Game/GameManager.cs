@@ -43,10 +43,15 @@ public class GameManager : MonoBehaviour
     // Button for picking player 2
     [SerializeField] private Button player2PickButton;
 
+    // The previous phase the game was in
+    static private GamePhase previousPhase;
+    // The number of pieces that need to be removed
+    static private int piecesToRemove;
+
     // The different game phases
     public enum GamePhase
     {
-        Placing, Moving, Flying
+        Placing, Moving, Flying, Removing
     }
 
     // Starts the game
@@ -110,7 +115,7 @@ public class GameManager : MonoBehaviour
         {
             // If players have no more men in hand, the placing phase of
             // the game is over
-            if (player1MenInHand == 0 && player2MenInHand == 0)
+            if (gamePhase == GamePhase.Placing && player1MenInHand == 0 && player2MenInHand == 0)
             {
                 // The game phase moves to the moving phase
                 gamePhase = GamePhase.Moving;
@@ -132,6 +137,9 @@ public class GameManager : MonoBehaviour
                 case GamePhase.Moving:
                     break;
                 case GamePhase.Flying:
+                    break;
+                case GamePhase.Removing:
+                    gameInformationController.SetRemovingText(GetCurrentPlayerName());
                     break;
             }
         }
@@ -173,8 +181,53 @@ public class GameManager : MonoBehaviour
                 }
 
                 // Check if a mill was formed
-                int millFormed = board.MillNumber(point, currentPlayerId);
-                Debug.Log(millFormed + " mills formed!");
+                int millsFormed = board.MillNumber(point, currentPlayerId);
+
+                // Change the phase of the game to Removing
+                if (millsFormed != 0)
+                {
+                    previousPhase = gamePhase;
+                    gamePhase = GamePhase.Removing;
+                    piecesToRemove = millsFormed;
+                    waiting = false;
+                    return;
+                }
+                break;
+            case GamePhase.Moving:
+                break;
+            case GamePhase.Flying:
+                break;
+            case GamePhase.Removing:
+                // Removes the other player's man from the point
+                board.RemovePlayerId(point);
+                // Plays the legal move sound effect
+                board.PlayLegalMoveSoundEffect();
+                // Plays an animation for removing a piece from the board
+                board.PlayRemoveAnimation(point);
+                // Decrease the number of men on the board for the other player
+                if (currentPlayerId == DefaultValues.player1Id)
+                {
+                    player2MenOnBoard--;
+                }
+                else if (currentPlayerId == DefaultValues.player2Id)
+                {
+                    player1MenOnBoard--;
+                }
+
+                // Decrease the number of pieces to remove
+                piecesToRemove--;
+                // If there are no more pieces to be removed, switch back to the
+                // previous phase
+                if (piecesToRemove == 0)
+                    gamePhase = previousPhase;
+                // If there are still more pieces that need to be removed, stay in
+                // the removing phase
+                else
+                {
+                    waiting = false;
+                    return;
+                }
+
                 break;
         }
 

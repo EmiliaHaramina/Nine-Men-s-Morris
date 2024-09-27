@@ -28,7 +28,14 @@ public class GameInformationController : MonoBehaviour
     {
         playerInstructions.text = currentPlayerName + ", place a piece";
     }
-    
+
+    // Changes the text to tell the current player they should remove
+    // one of their opponent's pieces
+    public void SetRemovingText(string currentPlayerName)
+    {
+        playerInstructions.text = currentPlayerName + ", remove a piece";
+    }
+
     // Sets the text for the number of pieces player 1 has left
     public void SetPlayer1PiecesLeftText(int piecesLeft)
     {

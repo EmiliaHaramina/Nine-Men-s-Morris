@@ -64,6 +64,15 @@ public class Point : MonoBehaviour
         button.onClick.RemoveAllListeners();
     }
 
+    // If this point has a defined player id, change it
+    // so it doesn't belong to a player and play the animation
+    // for removing a piece
+    public void RemovePlayerId()
+    {
+        if (playerId != DefaultValues.freePointPlayerId)
+            playerId = DefaultValues.freePointPlayerId;
+    }
+
     // Makes the point pickable so a player can click it, the legal
     // move animation is also played
     public void SetPickable()
@@ -77,6 +86,7 @@ public class Point : MonoBehaviour
     public void SetIllegal()
     {
         button.onClick.AddListener(() => IllegalPointClicked());
+        legalMoveAnimator.SetBool("legalMove", false);
     }
 
     // Illegal point has been clicked, tell GameManager
@@ -100,5 +110,13 @@ public class Point : MonoBehaviour
         ColorUtility.TryParseHtmlString(colorHexValue, out Color color);
         pieceImage.color = color;
         pointAnimator.SetBool("placed", true);
+        pointAnimator.SetBool("removed", false);
+    }
+
+    // Plays the men removing animation for this point
+    public void PlayRemoveAnimation()
+    {
+        pointAnimator.SetBool("placed", false);
+        pointAnimator.SetBool("removed", true);
     }
 }
