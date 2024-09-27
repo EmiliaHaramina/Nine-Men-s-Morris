@@ -132,7 +132,7 @@ public class Board : MonoBehaviour
         {
             // If it is the placing phase
             case GamePhase.Placing:
-                // For each point of the board, if no player is on it, make it available
+                // For each point on the board, if no player is on it, make it available
                 // If there is already a player on that point, make the point illegal
                 foreach (Point point in board)
                     if (point.GetPlayerId() == DefaultValues.freePointPlayerId)
@@ -140,14 +140,66 @@ public class Board : MonoBehaviour
                     else
                         point.SetIllegal();
                 break;
-            // If it the moving phase
-            case GamePhase.Moving:
+            // If it the first part of the moving phase
+            case GamePhase.Moving1:
+                bool hasMoves = false;
+                // For each point on the board, if it is the current player's and it has
+                // available spaces to move, make it available, otherwise, make it illegal
+                foreach (Point point in board)
+                {
+                    if (point.GetPlayerId() == currentPlayerId)
+                    {
+                        List<Point> neighbours = FindNeighbours(point);
+                        bool canMove = false;
+                        foreach (Point neighbour in neighbours)
+                            if (neighbour.GetPlayerId() == DefaultValues.freePointPlayerId)
+                            {
+                                point.SetPickable();
+                                canMove = true;
+                                hasMoves = true;
+                                break;
+                            }
+                        if (!canMove)
+                            point.SetIllegal();
+                    }
+                    else
+                        point.SetIllegal();
+                }
+
+                if (!hasMoves)
+                {
+                    // TODO: End game, opposing player is the winner
+                    Debug.Log("Winner!");
+                }
+                break;
+            // If it is the second part of the moving phase
+            case GamePhase.Moving2:
+                // Find the moving point
+                Point movingPoint = null;
+                foreach (Point point in board)
+                {
+                    if (point.IsMoving())
+                        movingPoint = point;
+                }
+
+                List<Point> movingPieceNeighbours = FindNeighbours(movingPoint);
+                foreach (Point point in board)
+                {
+                    if (point.GetPlayerId() == DefaultValues.freePointPlayerId &&
+                        movingPieceNeighbours.Contains(point))
+                        point.SetPickable();
+                    else
+                        point.SetIllegal();
+                }
+
                 break;
             // If it is the flying phase
             case GamePhase.Flying:
                 break;
             // If it is the removing phase
             case GamePhase.Removing:
+                // For each point on the board, if the point is from the other player,
+                // make it pickable, otherwise, make it illegal
                 foreach (Point point in board)
                     if (point.GetPlayerId() != DefaultValues.freePointPlayerId &&
                         point.GetPlayerId() != currentPlayerId)
@@ -156,6 +208,28 @@ public class Board : MonoBehaviour
                         point.SetIllegal();
                 break;
         }
+    }
+
+    // Returns points that are neighbours of the given point
+    public List<Point> FindNeighbours(Point point)
+    {
+        List<Point> neighbours = new();
+
+        foreach (Point otherPoint in board)
+        {
+            // Neighbours are calculated by only having a difference of 1 for coordinates and
+            // are not diagonal
+            int xDifference = Mathf.Abs(otherPoint.GetCircleIndex() - point.GetCircleIndex());
+            int yDifference = Mathf.Abs(otherPoint.GetColumnIndex() - point.GetColumnIndex());
+            int zDifference = Mathf.Abs(otherPoint.GetRowIndex() - point.GetRowIndex());
+            int difference = xDifference + yDifference + zDifference;
+            if (otherPoint != point && difference == 1 &&
+                (yDifference == 0 && zDifference == 0 && (otherPoint.GetColumnIndex() + otherPoint.GetRowIndex()) % 2 != 0 ||
+                yDifference != 0 || zDifference != 0))
+                neighbours.Add(otherPoint);
+        }
+
+        return neighbours;
     }
 
     // Returns true if a mill is formed for player with the
@@ -284,5 +358,11 @@ public class Board : MonoBehaviour
     public void PlayRemoveAnimation(Point point)
     {
         point.PlayRemoveAnimation();
+    }
+
+    // Enables the outline of the given point
+    public void SetMoving(Point point, bool moving)
+    {
+        point.SetMoving(moving);
     }
 }

@@ -20,6 +20,10 @@ public class Point : MonoBehaviour
     [SerializeField] private Button button;
     // The mill symbol of the point that is shown when a mill is formed
     [SerializeField] private Image millSymbol;
+    // The outline shows that the player picked this piece to move
+    [SerializeField] private Image outline;
+    // Bool that shows the piece on this point is about to move
+    private bool moving;
 
     // A point is defined by its position and the playerId is set to the default one
     // that belong to no player, at the start, it is not interactable
@@ -29,6 +33,8 @@ public class Point : MonoBehaviour
         playerId = DefaultValues.freePointPlayerId;
         button.enabled = true;
         millSymbol.enabled = false;
+        outline.enabled = false;
+        moving = false;
     }
 
     // Returns the id of the player occupying this point
@@ -137,5 +143,18 @@ public class Point : MonoBehaviour
     public void DeactivateMillSymbol()
     {
         millSymbol.enabled = false;
+    }
+
+    // Shows the outline of the point and prepares it for moving
+    public void SetMoving(bool moving)
+    {
+        this.moving = moving;
+        outline.enabled = true;
+    }
+
+    // Returns true if the piece on this point is moving
+    public bool IsMoving()
+    {
+        return moving;
     }
 }

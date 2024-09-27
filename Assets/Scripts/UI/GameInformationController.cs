@@ -36,6 +36,20 @@ public class GameInformationController : MonoBehaviour
         playerInstructions.text = currentPlayerName + ", remove a piece";
     }
 
+    // Changes the text to tell the current player they should pick a
+    // piece to move
+    public void SetMoving1Text(string currentPlayerName)
+    {
+        playerInstructions.text = currentPlayerName + ", pick a piece to move";
+    }
+
+    // Changes the text to tell the current player they should pick a
+    // place to move
+    public void SetMoving2Text(string currentPlayerName)
+    {
+        playerInstructions.text = currentPlayerName + ", move your piece";
+    }
+
     // Sets the text for the number of pieces player 1 has left
     public void SetPlayer1PiecesLeftText(int piecesLeft)
     {

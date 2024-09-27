@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     // The different game phases
     public enum GamePhase
     {
-        Placing, Moving, Flying, Removing
+        Placing, Moving1, Moving2, Flying, Removing
     }
 
     // Starts the game
@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
             if (gamePhase == GamePhase.Placing && player1MenInHand == 0 && player2MenInHand == 0)
             {
                 // The game phase moves to the moving phase
-                gamePhase = GamePhase.Moving;
+                gamePhase = GamePhase.Moving1;
                 // Hides the text letting players know how many more pieces
                 // they have left
                 gameInformationController.HidePiecesLeftText();
@@ -134,7 +134,11 @@ public class GameManager : MonoBehaviour
                 case GamePhase.Placing:
                     gameInformationController.SetPlacingText(GetCurrentPlayerName());
                     break;
-                case GamePhase.Moving:
+                case GamePhase.Moving1:
+                    gameInformationController.SetMoving1Text(GetCurrentPlayerName());
+                    break;
+                case GamePhase.Moving2:
+                    gameInformationController.SetMoving2Text(GetCurrentPlayerName());
                     break;
                 case GamePhase.Flying:
                     break;
@@ -193,7 +197,13 @@ public class GameManager : MonoBehaviour
                     return;
                 }
                 break;
-            case GamePhase.Moving:
+            case GamePhase.Moving1:
+                // Sets the point to be a moving point
+                board.SetMoving(point, true);
+                gamePhase = GamePhase.Moving2;
+                waiting = false;
+                return;
+            case GamePhase.Moving2:
                 break;
             case GamePhase.Flying:
                 break;
