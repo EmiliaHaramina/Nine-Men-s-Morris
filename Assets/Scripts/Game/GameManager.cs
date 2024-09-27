@@ -15,6 +15,13 @@ public class GameManager : MonoBehaviour
     private GamePhase gamePhase;
     // The id of the player who is currently playing
     private long currentPlayerId;
+    // The number of player men
+    private long player1Men;
+    private long player2Men;
+
+    // TODO: Remove later
+    [SerializeField] private int ringNumber;
+    [SerializeField] private int playerMen;
 
     // The game start menu in which players pick who plays first
     [SerializeField] private GameObject gameStartMenu;
@@ -42,7 +49,11 @@ public class GameManager : MonoBehaviour
         gamePaused = false;
         // Initializes the board
         board = FindObjectOfType<Board>();
-        board.Initialize(3);
+        board.Initialize(ringNumber);
+        // Sets the number of player men
+        player1Men = playerMen;
+        player2Men = playerMen;
+
         // Sets the game phase to the first phase
         gamePhase = GamePhase.Placing;
 

@@ -2252,6 +2252,14 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 3305750478202912116, guid: ff24aa6f4078f9445988907deae9af70, type: 3}
+      propertyPath: playerMen
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305750478202912116, guid: ff24aa6f4078f9445988907deae9af70, type: 3}
+      propertyPath: ringNumber
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305750478202912116, guid: ff24aa6f4078f9445988907deae9af70, type: 3}
       propertyPath: gameStartMenu
       value: 
       objectReference: {fileID: 879097180}
