@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
+using static GameManager;
 
 // The board contains points that players can place
 // their men on
@@ -10,8 +10,12 @@ public class Board : MonoBehaviour
     private List<Point> board;
     // Prefab for a point
     [SerializeField] private GameObject pointPrefab;
+    // Parent of points
+    [SerializeField] private GameObject points;
     // Prefab for a line betwene points
     [SerializeField] private GameObject linePrefab;
+    // Parent of lines
+    [SerializeField] private GameObject lines;
 
     // Sound effects available for the board
     [SerializeField] private SoundEffectSource buttonClickSoundEffectSource;
@@ -55,7 +59,7 @@ public class Board : MonoBehaviour
                     float pointX = (i + 1) * widthPerCircle * (k - 1);
                     float pointY = -(i + 1) * heightPerCircle * (j - 1);
                     GameObject point = Instantiate(pointPrefab, new Vector3(pointX, pointY, 0f), Quaternion.identity);
-                    point.transform.SetParent(transform, false);
+                    point.transform.SetParent(points.transform, false);
                     point.GetComponent<Point>().Initialize(i, j, k);
                     board.Add(point.GetComponent<Point>());
                 }
@@ -96,7 +100,7 @@ public class Board : MonoBehaviour
                     float lineX = (point1X + point2X) / 2;
                     float lineY = point1Y;
                     GameObject line = Instantiate(linePrefab, new Vector3(lineX, lineY, 0f), Quaternion.identity);
-                    line.transform.SetParent(transform, false);
+                    line.transform.SetParent(lines.transform, false);
                     // Set the line width
                     line.GetComponent<RectTransform>().sizeDelta = new Vector2(Mathf.Abs(point1X - point2X), DefaultValues.lineThickness);
                 }
@@ -109,10 +113,65 @@ public class Board : MonoBehaviour
                     float lineY = (point1Y + point2Y) / 2;
                     float lineX = point1X;
                     GameObject line = Instantiate(linePrefab, new Vector3(lineX, lineY, 0f), Quaternion.identity);
-                    line.transform.SetParent(transform, false);
+                    line.transform.SetParent(lines.transform, false);
                     // Set the line height
                     line.GetComponent<RectTransform>().sizeDelta = new Vector2(DefaultValues.lineThickness, Mathf.Abs(point1Y - point2Y));
                 }
             }
+    }
+
+    // Updates the current state of the board
+    public void UpdateCurrentRound(GamePhase gamePhase, long currentPlayerId)
+    {
+        // Clears the board first
+        foreach (Point point in board)
+            point.Clear();
+
+        // Actions depending on the phase of the gmae
+        switch (gamePhase)
+        {
+            // If it is the placing phase
+            case GamePhase.Placing:
+                // For each point of the board, if no player is on it, make it available
+                // If there is already a player on that point, make the point illegal
+                foreach (Point point in board)
+                    if (point.GetPlayerId() == DefaultValues.freePointPlayerId)
+                        point.SetPickable();
+                    else
+                        point.SetIllegal();
+                break;
+            // If it the moving phase
+            case GamePhase.Moving:
+                break;
+            // If it is the flying phase
+            case GamePhase.Flying:
+                break;
+        }
+    }
+
+    // Sets the player id of the current point
+    public void SetPointPlayerId(Point point, long currentPlayerId)
+    {
+        point.SetPlayerId(currentPlayerId);
+        // TODO: Check for mills
+    }
+
+    // Plays the sound effect for an illegal move on the board
+    public void PlayIllegalMoveSoundEffect()
+    {
+        illegalMoveSoundEffectSource.PlaySoundEffect();
+    }
+
+    // Plays the sound effect for a legal move on the board
+    public void PlayLegalMoveSoundEffect()
+    {
+        legalMoveSoundEffectSource.PlaySoundEffect();
+    }
+
+    // Plays the place animation for the given point, coloring
+    // it in the color of the current player's color
+    public void PlayPlaceAnimation(Point point, string colorHexValue)
+    {
+        point.PlayPlaceAnimation(colorHexValue);
     }
 }

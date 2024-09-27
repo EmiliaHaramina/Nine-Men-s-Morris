@@ -9,15 +9,24 @@ public class GameManager : MonoBehaviour
     private bool gamePaused;
     // Bool representing whether the game has started
     private bool gameStarted;
+    // Bool representing that the script is waiting for a player
+    // to play their move
+    static private bool waiting;
     // The board that player can play on
-    private Board board;
+    static private Board board;
     // The current phase of the game
-    private GamePhase gamePhase;
+    static private GamePhase gamePhase;
     // The id of the player who is currently playing
-    private long currentPlayerId;
+    static private long currentPlayerId;
     // The number of player men
-    private long player1Men;
-    private long player2Men;
+    static private int player1MenInHand;
+    static private int player2MenInHand;
+    static private long player1MenOnBoard;
+    static private long player2MenOnBoard;
+    // The player manager
+    static private PlayerManager playerManager;
+    // The game information controller
+    private GameInformationController gameInformationController;
 
     // TODO: Remove later
     [SerializeField] private int ringNumber;
@@ -43,16 +52,23 @@ public class GameManager : MonoBehaviour
     // Starts the game
     void Start()
     {
+        playerManager = FindObjectOfType<PlayerManager>();
+        gameInformationController = FindObjectOfType<GameInformationController>();
+
         // The game is not started until player pick who starts first
         gameStarted = false;
         // The game is not paused at the start
         gamePaused = false;
+        // The script is not waiting for the player at the start
+        waiting = false;
         // Initializes the board
         board = FindObjectOfType<Board>();
         board.Initialize(ringNumber);
         // Sets the number of player men
-        player1Men = playerMen;
-        player2Men = playerMen;
+        player1MenInHand = playerMen;
+        player2MenInHand = playerMen;
+        player1MenOnBoard = 0;
+        player2MenOnBoard = 0;
 
         // Sets the game phase to the first phase
         gamePhase = GamePhase.Placing;
@@ -78,14 +94,85 @@ public class GameManager : MonoBehaviour
     // Game updates
     void Update()
     {
-        // If the game is paused, nothing can be played
-       if (gamePaused)
+        // If the game is paused or the script is waiting for
+        // the player, nothing can be played
+        if (gamePaused || waiting)
             return;
 
-       if (gameStarted)
+        // If the game has started, perform an action based on the current phase
+        // of the game
+        if (gameStarted)
         {
+            // If players have no more men in hand, the placing phase of
+            // the game is over
+            if (player1MenInHand == 0 && player2MenInHand == 0)
+            {
+                gamePhase = GamePhase.Moving;
+            }
 
+            // Update the board to show legal moves
+            board.UpdateCurrentRound(gamePhase, currentPlayerId);
+            waiting = true;
+
+            // Update the UI instructions based on the current phase of the game
+            switch (gamePhase)
+            {
+                case GamePhase.Placing:
+                    gameInformationController.SetPlacingText(GetCurrentPlayerName());
+                    break;
+                case GamePhase.Moving:
+                    break;
+                case GamePhase.Flying:
+                    break;
+            }
         }
+    }
+
+    // Callback function for an illegal point that has been clicked
+    static public void IllegalPointClicked()
+    {
+        board.PlayIllegalMoveSoundEffect();
+    }
+
+    // Callback function for a legal point that has been clicked
+    static public void LegalPointClicked(Point point)
+    {
+        // Action depending on the current game phase
+        switch (gamePhase)
+        {
+            // If this is the placing phase
+            case GamePhase.Placing:
+                // Sets the current player's man on the board
+                board.SetPointPlayerId(point, currentPlayerId);
+                // Plays the legal move sound effect
+                board.PlayLegalMoveSoundEffect();
+                // Plays an animation for placing a piece on the board
+                board.PlayPlaceAnimation(point, playerManager.GetPlayerColorHexValue(currentPlayerId));
+                // Increment the number of men on the board and decrease the number
+                // of men in hand
+                if (currentPlayerId == DefaultValues.player1Id)
+                {
+                    player1MenOnBoard++;
+                    player1MenInHand--;
+                }
+                else if (currentPlayerId == DefaultValues.player2Id)
+                {
+                    player2MenOnBoard++;
+                    player2MenInHand--;
+                }
+                break;
+        }
+
+        // Switches the player
+        currentPlayerId = 3 - currentPlayerId;
+        // The game logic can continue
+        waiting = false;
+    }
+
+    // Returns the name of the current player
+    public string GetCurrentPlayerName()
+    {
+        return playerManager.GetPlayerName(currentPlayerId);
     }
 
     // Sets whether the game is paused
