@@ -299,7 +299,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 // Checks if a mill was formed and shows the mills
-                int millsFormed = board.MillNumber(point, currentPlayerId, true);
+                int millsFormed = board.MillNumber(point, true);
 
                 // Change the phase of the game to Removing
                 if (millsFormed != 0)
@@ -333,7 +333,7 @@ public class GameManager : MonoBehaviour
                 board.PlayPlaceAnimation(point, playerManager.GetPlayerColorHexValue(currentPlayerId));
 
                 // Checks if a mill was formed and shows the mills
-                millsFormed = board.MillNumber(point, currentPlayerId, true);
+                millsFormed = board.MillNumber(point, true);
 
                 // Change the phase of the game to Removing
                 if (millsFormed != 0)
