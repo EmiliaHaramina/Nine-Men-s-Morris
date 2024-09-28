@@ -30,4 +30,10 @@ static public class DefaultValues
     static public float lineThickness = 1.5f;
     // Default outline scale
     static public float outlineScale = 0.36f;
+
+    // Default values for ring and piece numbers
+    static public int ringNumber = 3;
+    static public int pieceNumber = 9;
+    static public int minRingNumber = 1;
+    static public int minPieceNumber = 3;
 }

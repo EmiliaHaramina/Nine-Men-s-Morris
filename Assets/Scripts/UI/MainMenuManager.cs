@@ -20,9 +20,14 @@ public class MainMenuManager : MenuManager
     private PlayerManager playerManager;
     [SerializeField] private Sprite tickSprite;
     [SerializeField] private Sprite crossSprite;
-
     [SerializeField] private List<ColorChoice> player1ColorChoices;
     [SerializeField] private List<ColorChoice> player2ColorChoices;
+
+    // Parameters for changing ring and pieces number
+    [SerializeField] private TMP_InputField ringNumberInputField;
+    [SerializeField] private Image ringNumberAlert;
+    [SerializeField] private TMP_InputField pieceNumberInputField;
+    [SerializeField] private Image pieceNumberAlert;
 
     // When the menu is shown at first, the main menu is set to be active,
     // while the settings menu should not be shown
@@ -40,9 +45,21 @@ public class MainMenuManager : MenuManager
         player1InputField.onValueChanged.AddListener((string value) => ChangePlayer1Name(value));
         player2InputField.onValueChanged.AddListener((string value) => ChangePlayer2Name(value));
 
+        // Menu game settings initialization
+        ringNumberInputField.text = DefaultValues.ringNumber.ToString();
+        pieceNumberInputField.text = DefaultValues.pieceNumber.ToString();
+        ringNumberInputField.onValueChanged.AddListener((string value) => ChangeRingNumber(value));
+        pieceNumberInputField.onValueChanged.AddListener((string value) => ChangePieceNumber(value));
+        GameManager.ChangeRingNumber(DefaultValues.ringNumber);
+        GameManager.ChangePieceNumber(DefaultValues.pieceNumber);
+
         // When the game starts, both players have different names
         player1NameAlert.sprite = tickSprite;
         player2NameAlert.sprite = tickSprite;
+
+        // When the game starts, the ring and piece numbers are in range
+        ringNumberAlert.sprite = tickSprite;
+        pieceNumberAlert.sprite = tickSprite;
 
         // Setting the player ids of color choices
         long player1Id = DefaultValues.player1Id;
@@ -87,6 +104,12 @@ public class MainMenuManager : MenuManager
         player2InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player2Name);
         player1NameAlert.sprite = tickSprite;
         player2NameAlert.sprite = tickSprite;
+
+        // When the settings menu is shown again, the last correct ring and
+        // piece number is shown (or, if the piece number was out of range,
+        // the piece number will be the maximum number for that ring number)
+        ringNumberInputField.text = GameManager.GetRingNumber().ToString();
+        pieceNumberInputField.text = GameManager.GetPieceNumber().ToString();
     }
 
     // Changes player 1's name
@@ -94,9 +117,9 @@ public class MainMenuManager : MenuManager
     {
         if (name.Equals(playerManager.GetPlayerName(DefaultValues.player1Id)) ||
             playerManager.ChangePlayerName(DefaultValues.player1Id, name))
-            player1NameAlert.sprite = tickSprite;
+            ChangeAlertToTick(player1NameAlert);
         else
-            player1NameAlert.sprite = crossSprite;
+            ChangeAlertToCross(player1NameAlert);
     }
 
     // Changes player 2's name
@@ -104,9 +127,60 @@ public class MainMenuManager : MenuManager
     {
         if (name.Equals(playerManager.GetPlayerName(DefaultValues.player2Id)) ||
             playerManager.ChangePlayerName(DefaultValues.player2Id, name))
-            player1NameAlert.sprite = tickSprite;
+            ChangeAlertToTick(player2NameAlert);
         else
-            player2NameAlert.sprite = crossSprite;
+            ChangeAlertToCross(player2NameAlert);
+    }
+
+    // Changes the ring number
+    private void ChangeRingNumber(string number)
+    {
+        if (!int.TryParse(number, out int ringNumber))
+            ChangeAlertToCross(ringNumberAlert);
+        ChangeRingNumber(ringNumber);
+    }
+
+    // Changes the ring number, and changes the piece number alert if
+    // it is now out of range
+    private void ChangeRingNumber(int number)
+    {
+        if (GameManager.ChangeRingNumber(number))
+        {
+            ChangeAlertToTick(ringNumberAlert);
+            ChangePieceNumber(GameManager.GetPieceNumber());
+            pieceNumberInputField.text = GameManager.GetPieceNumber().ToString();
+        }
+        else
+            ChangeAlertToCross(ringNumberAlert);
+    }
+
+    // Changes the pieces number
+    private void ChangePieceNumber(string number)
+    {
+        if (!int.TryParse(number, out int pieceNumber))
+            ChangeAlertToCross(pieceNumberAlert);
+        ChangePieceNumber(pieceNumber);
+    }
+
+    // Changes the pieces number
+    private void ChangePieceNumber(int number)
+    {
+        if (GameManager.ChangePieceNumber(number))
+            ChangeAlertToTick(pieceNumberAlert);
+        else
+            ChangeAlertToCross(pieceNumberAlert);
+    }
+
+    // Changes given alert to a cross
+    private void ChangeAlertToCross(Image alert)
+    {
+        alert.sprite = crossSprite;
+    }
+
+    // Changes given alert to a tick
+    private void ChangeAlertToTick(Image alert)
+    {
+        alert.sprite = tickSprite;
     }
 
     // Changes a player's color to the defined color and changes the color

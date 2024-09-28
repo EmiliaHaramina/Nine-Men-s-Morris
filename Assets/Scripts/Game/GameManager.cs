@@ -30,9 +30,8 @@ public class GameManager : MonoBehaviour
     // The game information controller
     static private GameInformationController gameInformationController;
 
-    // TODO: Remove later
-    [SerializeField] private int ringNumber;
-    [SerializeField] private int playerMen;
+    [SerializeField] static private int ringNumber;
+    [SerializeField] static private int pieceNumber;
 
     // The game start menu in which players pick who plays first
     [SerializeField] private GameObject gameStartMenu;
@@ -77,8 +76,8 @@ public class GameManager : MonoBehaviour
         board = FindObjectOfType<Board>();
         board.Initialize(ringNumber);
         // Sets the number of player men
-        player1MenInHand = playerMen;
-        player2MenInHand = playerMen;
+        player1MenInHand = pieceNumber;
+        player2MenInHand = pieceNumber;
         player1MenOnBoard = 0;
         player2MenOnBoard = 0;
 
@@ -205,6 +204,46 @@ public class GameManager : MonoBehaviour
         // Shows the winner menu
         gameInformationController.ShowWinnerText(GetCurrentPlayerName());
         EndGame();
+    }
+
+    // Change the ring number if it is in range (minimum is 1)
+    // Additionally, if the piece number is now not in range, sets
+    // it to the maximum number for the ring number
+    static public bool ChangeRingNumber(int number)
+    {
+        if (number < DefaultValues.minRingNumber)
+            return false;
+        ringNumber = number;
+        //ChangePieceNumber(pieceNumber);
+        return true;
+    }
+
+    // Change the piece number if it is in range (minimum is 1,
+    // maximum has to fit both player's pieces on the board)
+    static public bool ChangePieceNumber(int number)
+    {
+        int maxPieceNumber = (ringNumber * 8) / 2;
+        if (number < DefaultValues.minPieceNumber ||
+            number > maxPieceNumber)
+        {
+            pieceNumber = maxPieceNumber;
+            return false;
+        }
+
+        pieceNumber = number;
+        return true;
+    }
+
+    // Returns the ring number
+    static public int GetRingNumber()
+    {
+        return ringNumber;
+    }
+
+    // Returns the piece number
+    static public int GetPieceNumber()
+    {
+        return pieceNumber;
     }
 
     // Ends the game

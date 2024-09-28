@@ -4890,9 +4890,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1965226673}
     - target: {fileID: 8900421874292956204, guid: 7f751f750229da84bab9801c0f0ce5b9, type: 3}
+      propertyPath: ringNumberAlert
+      value: 
+      objectReference: {fileID: 999848823}
+    - target: {fileID: 8900421874292956204, guid: 7f751f750229da84bab9801c0f0ce5b9, type: 3}
       propertyPath: speakerOnSprite
       value: 
       objectReference: {fileID: 21300000, guid: 252f907fd87565b4597b97126aeee1db, type: 3}
+    - target: {fileID: 8900421874292956204, guid: 7f751f750229da84bab9801c0f0ce5b9, type: 3}
+      propertyPath: pieceNumberAlert
+      value: 
+      objectReference: {fileID: 1698516429}
     - target: {fileID: 8900421874292956204, guid: 7f751f750229da84bab9801c0f0ce5b9, type: 3}
       propertyPath: player1NameAlert
       value: 
@@ -4917,6 +4925,14 @@ PrefabInstance:
       propertyPath: player2InputField
       value: 
       objectReference: {fileID: 505078300}
+    - target: {fileID: 8900421874292956204, guid: 7f751f750229da84bab9801c0f0ce5b9, type: 3}
+      propertyPath: ringNumberInputField
+      value: 
+      objectReference: {fileID: 208669574}
+    - target: {fileID: 8900421874292956204, guid: 7f751f750229da84bab9801c0f0ce5b9, type: 3}
+      propertyPath: pieceNumberInputField
+      value: 
+      objectReference: {fileID: 767252285}
     - target: {fileID: 8900421874292956204, guid: 7f751f750229da84bab9801c0f0ce5b9, type: 3}
       propertyPath: soundEffectsSpeakerImage
       value: 
