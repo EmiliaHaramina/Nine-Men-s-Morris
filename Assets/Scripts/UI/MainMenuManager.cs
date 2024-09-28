@@ -46,12 +46,27 @@ public class MainMenuManager : MenuManager
         player2InputField.onValueChanged.AddListener((string value) => ChangePlayer2Name(value));
 
         // Menu game settings initialization
-        ringNumberInputField.text = DefaultValues.ringNumber.ToString();
-        pieceNumberInputField.text = DefaultValues.pieceNumber.ToString();
+        int startingRingNumber;
+        int startingPieceNumber;
+        // If the ring number in game manager hasn't been set yet,
+        // set it to the default value. Otherwise, take the value from
+        // game manager
+        if (GameManager.GetRingNumber() == 0)
+        {
+            startingRingNumber = DefaultValues.ringNumber;
+            startingPieceNumber = DefaultValues.pieceNumber;
+        } else
+        {
+            startingRingNumber = GameManager.GetRingNumber();
+            startingPieceNumber = GameManager.GetPieceNumber();
+        }
+
+        ringNumberInputField.text = startingRingNumber.ToString();
+        pieceNumberInputField.text = startingPieceNumber.ToString();
         ringNumberInputField.onValueChanged.AddListener((string value) => ChangeRingNumber(value));
         pieceNumberInputField.onValueChanged.AddListener((string value) => ChangePieceNumber(value));
-        GameManager.ChangeRingNumber(DefaultValues.ringNumber);
-        GameManager.ChangePieceNumber(DefaultValues.pieceNumber);
+        GameManager.ChangeRingNumber(startingRingNumber);
+        GameManager.ChangePieceNumber(startingPieceNumber);
 
         // When the game starts, both players have different names
         player1NameAlert.sprite = tickSprite;

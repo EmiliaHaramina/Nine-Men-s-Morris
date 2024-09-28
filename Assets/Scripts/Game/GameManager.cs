@@ -72,6 +72,13 @@ public class GameManager : MonoBehaviour
         waiting = false;
         // The game is not ended at the start
         gameEnded = false;
+        // Initializes the ring number and piece number if they have not
+        // been initialized yet
+        if (ringNumber == 0)
+        {
+            ringNumber = DefaultValues.ringNumber;
+            pieceNumber = DefaultValues.pieceNumber;
+        }
         // Initializes the board
         board = FindObjectOfType<Board>();
         board.Initialize(ringNumber);
