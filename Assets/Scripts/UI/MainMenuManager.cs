@@ -12,7 +12,6 @@ public class MainMenuManager : MenuManager
     [SerializeField] private GameObject settingsMenu;
     private bool mainMenuVisible = true;
 
-
     // Parameters for changing player properties
     [SerializeField] private TMP_InputField player1InputField;
     [SerializeField] private Image player1NameAlert;
