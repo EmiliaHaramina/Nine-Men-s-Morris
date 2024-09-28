@@ -19,8 +19,8 @@ public class MusicController : MonoBehaviour
     // Initializes the background music and its volume depending on the player prefs
     public void Initialize()
     {
-        menuManager = FindObjectOfType<MenuManager>();
-        musicVolumeController = FindObjectOfType<MusicVolumeController>();
+        menuManager = FindAnyObjectByType<MenuManager>();
+        musicVolumeController = FindAnyObjectByType<MusicVolumeController>();
 
         SetSoundFromPlayerPrefs();
         SetVolumeFromPlayerPrefs();

@@ -16,8 +16,8 @@ public class SoundEffectsController : MonoBehaviour
     // Initializes the sound effects and their volume depending on the player prefs
     public void Initialize()
     {
-        menuManager = FindObjectOfType<MenuManager>();
-        soundEffectsVolumeController = FindObjectOfType<SoundEffectsVolumeController>();
+        menuManager = FindAnyObjectByType<MenuManager>();
+        soundEffectsVolumeController = FindAnyObjectByType<SoundEffectsVolumeController>();
 
         SetSoundFromPlayerPrefs();
         SetVolumeFromPlayerPrefs();

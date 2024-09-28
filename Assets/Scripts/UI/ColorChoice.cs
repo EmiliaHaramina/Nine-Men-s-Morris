@@ -33,7 +33,7 @@ public class ColorChoice : MonoBehaviour
     // available
     void Awake()
     {
-        mainMenuManager = FindObjectOfType<MainMenuManager>();
+        mainMenuManager = FindAnyObjectByType<MainMenuManager>();
 
         color = colorImage.color;
         colorHexValue = "#" + ColorUtility.ToHtmlStringRGB(color);

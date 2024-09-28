@@ -15,7 +15,7 @@ public class SoundEffectsVolumeController : MonoBehaviour
     // Finds the sound effects controller and initializes the sound effects volume scrollbar
     public void Initialize()
     {
-        soundEffectsController = FindObjectOfType<SoundEffectsController>();
+        soundEffectsController = FindAnyObjectByType<SoundEffectsController>();
 
         scrollbar.value = PlayerPrefs.GetFloat(PlayerPrefsKeys.soundEffectsVolume);
         lastVolume = scrollbar.value;

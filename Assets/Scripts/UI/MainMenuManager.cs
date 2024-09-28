@@ -33,13 +33,13 @@ public class MainMenuManager : MenuManager
     // while the settings menu should not be shown
     void Start()
     {
-        soundManager = FindObjectOfType<SoundManager>();
+        soundManager = FindAnyObjectByType<SoundManager>();
 
         mainMenu.SetActive(true);
         settingsMenu.SetActive(false);
 
         // Menu player properties initialization
-        playerManager = FindObjectOfType<PlayerManager>();
+        playerManager = FindAnyObjectByType<PlayerManager>();
         player1InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player1Name);
         player2InputField.text = PlayerPrefs.GetString(PlayerPrefsKeys.player2Name);
         player1InputField.onValueChanged.AddListener((string value) => ChangePlayer1Name(value));

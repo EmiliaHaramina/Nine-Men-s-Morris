@@ -61,8 +61,8 @@ public class GameManager : MonoBehaviour
     // Starts the game
     void Start()
     {
-        playerManager = FindObjectOfType<PlayerManager>();
-        gameInformationController = FindObjectOfType<GameInformationController>();
+        playerManager = FindAnyObjectByType<PlayerManager>();
+        gameInformationController = FindAnyObjectByType<GameInformationController>();
 
         // The game is not started until player pick who starts first
         gameStarted = false;
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
             pieceNumber = DefaultValues.pieceNumber;
         }
         // Initializes the board
-        board = FindObjectOfType<Board>();
+        board = FindAnyObjectByType<Board>();
         board.Initialize(ringNumber);
         // Sets the number of player men
         player1MenInHand = pieceNumber;

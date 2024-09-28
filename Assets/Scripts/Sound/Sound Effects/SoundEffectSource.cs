@@ -11,7 +11,7 @@ public class SoundEffectSource : MonoBehaviour
     // Finds the sound effect controller
     private void Start()
     {
-        soundEffectsController = FindObjectOfType<SoundEffectsController>();
+        soundEffectsController = FindAnyObjectByType<SoundEffectsController>();
     }
 
     // Plays the object's sound effect

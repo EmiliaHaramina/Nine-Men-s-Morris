@@ -17,10 +17,10 @@ public class SettingsManager : MonoBehaviour
     void Start()
     {
         // Finding all required controllers
-        musicVolumeController = FindObjectOfType<MusicVolumeController>();
-        musicController = FindObjectOfType<MusicController>();
-        soundEffectsVolumeController = FindObjectOfType<SoundEffectsVolumeController>();
-        soundEffectsController = FindObjectOfType<SoundEffectsController>();
+        musicVolumeController = FindAnyObjectByType<MusicVolumeController>();
+        musicController = FindAnyObjectByType<MusicController>();
+        soundEffectsVolumeController = FindAnyObjectByType<SoundEffectsVolumeController>();
+        soundEffectsController = FindAnyObjectByType<SoundEffectsController>();
 
         // Initializes player prefs
         PlayerPrefsKeys.Initialize();

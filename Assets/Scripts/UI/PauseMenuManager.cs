@@ -26,8 +26,8 @@ public class PauseMenuManager : MenuManager
     // Sets the pause menu as disabled
     void Start()
     {
-        soundManager = FindObjectOfType<SoundManager>();
-        gameManager = FindObjectOfType<GameManager>();
+        soundManager = FindAnyObjectByType<SoundManager>();
+        gameManager = FindAnyObjectByType<GameManager>();
 
         pauseMenuControls = new PauseMenuControls();
         pauseMenuControls.Enable();

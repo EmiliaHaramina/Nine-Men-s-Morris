@@ -15,7 +15,7 @@ public class MusicVolumeController : MonoBehaviour
     // Finds the music controller and initializes the background music volume scrollbar
     public void Initialize()
     {
-        musicController = FindObjectOfType<MusicController>();
+        musicController = FindAnyObjectByType<MusicController>();
 
         scrollbar.value = PlayerPrefs.GetFloat(PlayerPrefsKeys.musicVolume);
         lastVolume = scrollbar.value;
