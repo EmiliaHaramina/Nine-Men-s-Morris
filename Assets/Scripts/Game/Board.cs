@@ -204,7 +204,6 @@ public class Board : MonoBehaviour
                 break;
             // If it is the removing phase
             case GamePhase.Removing:
-                // TODO: Cannot remove in mills unless that is the only choice
                 // For each point on the board, if the point is from the other player
                 // and is NOT included in any mills, make it pickable, otherwise,
                 // make it illegal
